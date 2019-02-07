@@ -1,8 +1,10 @@
-import { Module } from "module";
+import { shuffle } from "../Helpers/ArrayHelper";
+import { FormatEmailBody, SendEmail } from "../Helpers/Mailer";
+import { EncodeValue } from "../Helpers/Hasher";
 
 class StudentsExamManager {
-    constructor(sqlConnection) {
-        this.Db = sqlConnection;
+    constructor() {
+        this.Db = require("../../DAL/MSSQL/MssqlConnection.js");
     }
 
     async StartNewExam(examId, student) {
@@ -23,46 +25,51 @@ class StudentsExamManager {
         return examDto;
     }
 
-    async AnswerQuestion(studentExamId,questionId,answerIds)
-    {
-        let answersParms ={
-            StudentExamId : studentExamId,
-            QuestionId : questionId,
-            AnswerIds : []
-        }
-        answerIds.forEach(element => {
-            answersParms.AnswerIds.push({ID:element})
-        });
-        await this.Db.ExecuteStoredPorcedure('SaveStudentAnswers',answersParms);
-  
+    async AnswerQuestion(studentExamId, questionId, answerIds) {
+        let answersParms = {
+            StudentExamId: studentExamId,
+            QuestionId: questionId,
+            AnswerIds: this.Db.CnvertToIdTable(answerIds)
+        }       
+        await this.Db.ExecuteStoredPorcedure('SaveStudentAnswers', answersParms);
     }
 
-    async SubmitTest(studentExamId)
-    {
+    async SubmitTest(studentExamId) {
         let SubmitParms =
         {
-            StudentExamId : studentExamId,
-            FullData : true
+            StudentExamId: studentExamId,
+            FullData: true
         }
         let results = await this.Db.ExecuteStoredPorcedure('GetGrade');
         results = results[0];
-        //todo send mail here
-        
-        
+        //genrate cert url
+        let certUrl = global.gConfig.baseUrl + global.gConfig.CertGenerationUrl +
+            '?Id=' + EncodeValue(studentExamId);
+
+        //send mail
+        if (results[0].OrganaizerEmail) {
+            let body = FormatEmailBody(results[0].Body, results[0].Name,
+                results[0].StudentFirstName, results[0].StudentLastName,
+                results[0].ExamDate, results[0].Grade, certUrl);
+            SendEmail(results[0].OrganaizerEmail, results[0].StudentEmail,
+                results[0].Subject, body);
+        }
+        //generate and return results dto
         let ResultsDto =
         {
-            grade : results.Grade,
-            text : results.text,
-            passed : results.Passed,
-            showAnswers : results.ShowAnswer,
-            passingGrade : results.PassingGrade
+            grade: results.Grade,
+            text: results.text,
+            passed: results.Passed,
+            showAnswers: results.ShowAnswer,
+            passingGrade: results.PassingGrade,
+            certificate: certUrl
         }
         return ResultsDto;
     }
 
     async _createStudentExam(qestions, answers, examDto, student) {
-        var questionsOrder = [];
-        var answersOrder = [];
+        var questionsOrder = this.Db.GetQuestionOrderTable();
+        var answersOrder = this.Db.GetAnswersOrderTable();
         let answerIdx = 0;
         answerIdx = this._StructureQuestions(qestions, answerIdx, answers, answersOrder, examDto);
         this._SetQuestionsOrder(examDto, questionsOrder);
@@ -96,23 +103,17 @@ class StudentsExamManager {
     }
 
     _SetQuestionsOrder(examDto, questionsOrder) {
-        examDto.questions = this._shuffle(examDto.questions);
+        examDto.questions = shuffle(examDto.questions);
         for (let j = 0; j < examDto.questions.length; j++) {
-            questionsOrder.push({
-                QuestionId: examDto.questions[j].id,
-                Index: j + 1
-            });
+            questionsOrder.rows.add(examDto.questions[j].id, j + 1);
         }
     }
 
     _SetQuestionAnswersOrder(question, answersOrder, questionId) {
-        question.answers = this._shuffle(question.answers);
+        question.answers = shuffle(question.answers);
         for (let j = 0; j < question.answers.length; j++) {
-            answersOrder.push({
-                AnswerId: question.answers[j].id,
-                QuestionId: questionId,
-                Index: j + 1
-            });
+            answersOrder.rows.add(question.answers[j].id,
+                questionId, j + 1);
         }
     }
 
@@ -137,25 +138,6 @@ class StudentsExamManager {
             studentLastName: student.lastName
         };
         await this.Db.ExecuteStoredPorcedure('CreateStudentIfNotExsists', studentParms);
-    }
-
-    _shuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-
-        return array;
     }
 
 

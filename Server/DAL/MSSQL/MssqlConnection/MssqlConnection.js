@@ -1,24 +1,13 @@
 class MssqlConnection {
     constructor() {
         this.sql = require('mssql')
-        this.config =
-            {
-                user: 'ExamSql',
-                password: '12345678',
-                server: 'exam-db.ceuwciuggcni.eu-central-1.rds.amazonaws.com',
-                database: 'examsDb',
-                pool: {
-                    max: 10,
-                    min: 0,
-                    idleTimeoutMillis: 30000
-                }
-            }
-
-
-        this.pool = new this.sql.ConnectionPool(this.config).connect();
-        this.pool.on('error', err => {
-            console.log('Database Connection Failed! Bad Config: ', err)
-        })
+        this.config = global.gConfig.SqlConfig;
+        this.pool = new this.sql.ConnectionPool(this.config).connect(err => {
+            if (err)
+                console.log('Database Connection Failed! Bad Config: ', err)
+            else
+                console.log('connected to db');
+        });
     }
 
     ExecuteStoredPorcedure(name, paramsllbeck) {
@@ -30,5 +19,30 @@ class MssqlConnection {
         }
         return req.execute(name)
     }
+
+    CnvertToIdTable(list) {
+        const table = new  this.sql.Table();
+        table.columns.add("ID", this.sql.int);
+        for (let i = 0; i < list.length; i++) {
+            table.rows.add(list[i]);
+        }
+    }
+
+    GetQuestionOrderTable() {
+        const table = new  this.sql.Table();
+        table.columns.add("QuestionId", this.sql.int);
+        table.columns.add("Index", this.sql.TinyInt);
+        return table;
+    }
+
+    GetAnswersOrderTable() {
+        const table = new  this.sql.Table();
+        table.columns.add("AnswerId", this.sql.int);
+        table.columns.add("QuestionId", this.sql.int);
+        table.columns.add("Index", this.sql.TinyInt);
+        return table;
+    }
 }
-module.exports = MssqlConnection;
+const Db = new MssqlConnection();
+
+module.exports = Db;
