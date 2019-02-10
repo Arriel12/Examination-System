@@ -5,7 +5,7 @@ const newExam = {
     email: Joi.string().email().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
-    phone: Joi.string().regex('^(\+972|0)5{0,1}\d{8}$')
+    phone: Joi.string().regex(/^(\+972|0)5{0,1}\d{8}$/).required()
   }
 };
 

@@ -1,12 +1,14 @@
-import { StudentExamsMsnsger } from "../../BL/Managers/StudentExamsMsnsger.js";
-import { newExam,answer } from "../Validation/StudentExams.js";
 
-var express = require('express')
-var router = express.Router()
+var express = require('express');
+var router = express.Router();
+const validate = require('express-validation')
+
+const StudentExamsMsnsger = require("../../BL/Managers/StudentExamsManager.js");
+const Volidators = require("../Validation/StudentExams.js");
 
 const manager = new StudentExamsMsnsger();
 
-router.post('/:examId', validate(newExam), function (req, res) {
+router.post('/:examId', validate(Volidators.newExam), function (req, res) {
     let student = req.body;
     let examId = req.params.examId;
     try {
@@ -19,7 +21,7 @@ router.post('/:examId', validate(newExam), function (req, res) {
     }
 });
 
-router.post('/:examId/answer',validate(answer), async function (req, res) {
+router.post('/:examId/answer',validate(Volidators.answer), async function (req, res) {
     let examId = req.params.examId;
     let answers = req.body.answers;
     let questionId = req.body.questionId;

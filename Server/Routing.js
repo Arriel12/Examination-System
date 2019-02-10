@@ -1,6 +1,6 @@
 const ev = require('express-validation');
 function SetupRouting(app) {
-    var validate = require('express-validation')
+    let validate = require('express-validation')
         , bodyParser = require('body-parser')
         , cookieParser = require('cookie-parser');
 
@@ -8,11 +8,11 @@ function SetupRouting(app) {
     app.use(cookieParser())
 
 
-    var StudentExamsController = require('./FE/Controllers/StudentExamsController.js');
+    let StudentExamsController = require('./FE/Controllers/StudentExamsController.js');
     app.use('/exams', StudentExamsController);
 
-
-
+    let AdminExamController = require('./FE/Controllers/AdminExamsController.js');
+    app.use('/admin/Exams',AdminExamController);
 
 
 
@@ -26,7 +26,7 @@ function SetupRouting(app) {
         if (process.env.NODE_ENV !== 'production') {
             return res.status(500).send(err.stack);
         } else {
-            return res.status(500);
+            return res.sendStatus(500);
         }
     });
 }

@@ -13,5 +13,12 @@
         }
     },
     "EncodingKey" : "avhdfij7wrtfjdo7bdvtre67egvc2",
-    "HttpPort" : 80
+    "HttpPort" : 8080,
+    "JWT":{
+        "key":"dhetefjktgafcjuhloryjgf,owectumriEOCVM,Y",
+        "algoritem":"HS256",
+        "ttl" : 60,
+        "aud" : "ExamAdmin",
+        "iss" : "ExamAdmin"
+    }
 }

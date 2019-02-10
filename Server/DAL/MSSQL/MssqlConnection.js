@@ -10,7 +10,7 @@ class MssqlConnection {
         });
     }
 
-    ExecuteStoredPorcedure(name, paramsllbeck) {
+    ExecuteStoredPorcedure(name, params) {
         const req = new this.pool.request();
         for (var key in params) {
             if (p.hasOwnProperty(key)) {

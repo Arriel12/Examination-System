@@ -1,6 +1,6 @@
-import { shuffle } from "../Helpers/ArrayHelper";
-import { FormatEmailBody, SendEmail } from "../Helpers/Mailer";
-import { EncodeValue } from "../Helpers/Hasher";
+const shuffle = require("../Helpers/ArrayHelper");
+const Mailer = require("../Helpers/Mailer");
+const EncodeValue = require("../Helpers/Hasher").EncodeValue;
 
 class StudentsExamManager {
     constructor() {
@@ -40,18 +40,18 @@ class StudentsExamManager {
             StudentExamId: studentExamId,
             FullData: true
         }
-        let results = await this.Db.ExecuteStoredPorcedure('GetGrade');
+        let results = await this.Db.ExecuteStoredPorcedure('GetGrade',SubmitParms);
         results = results[0];
         //genrate cert url
         let certUrl = global.gConfig.baseUrl + global.gConfig.CertGenerationUrl +
-            '?Id=' + EncodeValue(studentExamId);
+            '/' + EncodeValue(studentExamId);
 
         //send mail
         if (results[0].OrganaizerEmail) {
-            let body = FormatEmailBody(results[0].Body, results[0].Name,
+            let body = Mailer.FormatEmailBody(results[0].Body, results[0].Name,
                 results[0].StudentFirstName, results[0].StudentLastName,
                 results[0].ExamDate, results[0].Grade, certUrl);
-            SendEmail(results[0].OrganaizerEmail, results[0].StudentEmail,
+                Mailer.SendEmail(results[0].OrganaizerEmail, results[0].StudentEmail,
                 results[0].Subject, body);
         }
         //generate and return results dto
