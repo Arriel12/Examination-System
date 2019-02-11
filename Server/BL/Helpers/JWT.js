@@ -5,7 +5,7 @@ const JwtOptions =
     algorithm: conf.algoritem,
     issuer: conf.iss,
     audience: conf.aud,
-}
+};
 
 function create(sub, customeData = {}) {
     let pyload = {
@@ -21,7 +21,7 @@ function create(sub, customeData = {}) {
 
 function validateAndGet(token) {
     try {
-        return jwt.verify(token, secretOrPublicKey, JwtOptions);
+        return jwt.verify(token, conf.key, JwtOptions);
     }
     catch(err) {
         return null;

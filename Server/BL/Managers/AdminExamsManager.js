@@ -1,40 +1,44 @@
+const Hasher = require('../Helpers/Hasher.js')
 class AdminExamsManager {
     constructor() {
         this.Db = require("../../DAL/MSSQL/MssqlConnection.js");
     }
 
-    ListExams(orgId) {
-        let res = this.Db.ExecuteStoredPorcedure("GetExamsList", { OrganizationId: orgId });
-        res = res[0];
+    async ListExams(orgId) {
+        let res = await this.Db.ExecuteStoredPorcedure("GetExamsList", { OrganizationId: orgId });
+        res = res.recordsets[0];
         res.forEach(element => {
-            element.url = global.gconfig.baseUrl + "/exams/" + element.Id;
+            element.url = global.gConfig.baseUrl + "/exams/" +
+                Hasher.EncodeValue(element.Id.toString());
         });
         return res;
     }
 
-    CreateExam(orgId, data) {
+    async CreateExam(orgId, data) {
         data['OrganizationId'] = orgId;
         data.questionsIds = this.Db.CnvertToIdTable(data.questionsIds);
-        let res =this.Db.ExecuteStoredPorcedure('CreateExam', data);
-        return res[0];
+        let res = await this.Db.ExecuteStoredPorcedure('CreateExam', data);
+        return {
+            examId:res.recordsets[0][0].ExamId,
+            url:global.gConfig.baseUrl + "/exams/" + Hasher.EncodeValue(element.Id.toString())
+        };
     }
 
-    GetExam(examId)
-    {
-        let res = this.Db.ExecuteStoredPorcedure('GetExamAdmin',{ExamId: examId});
+    async GetExam(examId) {
+        let res = await this.Db.ExecuteStoredPorcedure('GetExamAdmin', { ExamId: examId });
         //spreads the first test(only 1 returned) into the object(creates clone and add questions)
-        let exam ={
-            ...res[0][0], 
-            questions:res[1]
+        let exam = {
+            ...res.recordsets[0][0],
+            questions: res.recordsets[1],
+            url:global.gConfig.baseUrl + "/exams/" + Hasher.EncodeValue(examId.toString())
         };
         return exam;
     }
 
-    UpdateExam(examId,data)
-    {
+    async UpdateExam(examId, data) {
         data.ExamId = examId;
         data.questionsIds = this.Db.CnvertToIdTable(data.questionsIds);
-        this.Db.ExecuteStoredPorcedure('UpdateExam',data);
+        await this.Db.ExecuteStoredPorcedure('UpdateExam', data);
     }
 }
 

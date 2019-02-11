@@ -1,26 +1,27 @@
 const shuffle = require("../Helpers/ArrayHelper");
 const Mailer = require("../Helpers/Mailer");
-const EncodeValue = require("../Helpers/Hasher").EncodeValue;
+const Hasher = require("../Helpers/Hasher");
 
 class StudentsExamManager {
     constructor() {
         this.Db = require("../../DAL/MSSQL/MssqlConnection.js");
     }
 
-    async StartNewExam(examId, student) {
+    async StartNewExam(encodedExamId, student) {
         await this._createStudent(student);
+        let examId = Hasher.DecodeValue(encodedExamId);
         const exam = await this.Db.ExecuteStoredPorcedure('GetExamStudent', examId);
         let examDto =
         {
-            examId: exam[0].Id,
-            language: exam[0].Language,
-            name: exam[0].Name,
-            openingText: exam[0].OpeningText,
-            passingGrade: exam[0].PassingGrade,
+            examId: exam.recordsets[0][0].Id,
+            language: exam.recordsets[0][0].Language,
+            name: exam.recordsets[0][0].Name,
+            openingText: exam.recordsets[0][0].OpeningText,
+            passingGrade: exam.recordsets[0][0].PassingGrade,
             questions: []
         };
-        let qestions = exam[1];
-        let answers = exam[2];
+        let qestions = exam.recordsets[1];
+        let answers = exam.recordsets[2];
         await this._createStudentExam(qestions, answers, examDto, student);
         return examDto;
     }
@@ -41,18 +42,18 @@ class StudentsExamManager {
             FullData: true
         }
         let results = await this.Db.ExecuteStoredPorcedure('GetGrade',SubmitParms);
-        results = results[0];
+        results = results.recordsets[0][0];
         //genrate cert url
         let certUrl = global.gConfig.baseUrl + global.gConfig.CertGenerationUrl +
-            '/' + EncodeValue(studentExamId);
+            '/' + Hasher.EncodeValue(studentExamId);
 
         //send mail
-        if (results[0].OrganaizerEmail) {
-            let body = Mailer.FormatEmailBody(results[0].Body, results[0].Name,
-                results[0].StudentFirstName, results[0].StudentLastName,
-                results[0].ExamDate, results[0].Grade, certUrl);
-                Mailer.SendEmail(results[0].OrganaizerEmail, results[0].StudentEmail,
-                results[0].Subject, body);
+        if (results.OrganaizerEmail) {
+            let body = Mailer.FormatEmailBody(results.Body, results.Name,
+                results.StudentFirstName, results.StudentLastName,
+                results.ExamDate, results.Grade, certUrl);
+                Mailer.SendEmail(results.OrganaizerEmail, results.StudentEmail,
+                results.Subject, body);
         }
         //generate and return results dto
         let ResultsDto =
@@ -80,7 +81,7 @@ class StudentsExamManager {
             AnswersOrder: answersOrder
         };
         let studenttestId = await this.Db.ExecuteStoredPorcedure('CreateStudentExam', createStudentExamParms);
-        studenttestId = studenttestId[0].Id;
+        studenttestId = studenttestId.recordsets[0][0].Id;
         examDto.id = studenttestId;
     }
 

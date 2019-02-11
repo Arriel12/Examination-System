@@ -7,21 +7,22 @@ class MssqlConnection {
                 console.log('Database Connection Failed! Bad Config: ', err)
             else
                 console.log('connected to db');
-        });
+        });       
     }
 
-    ExecuteStoredPorcedure(name, params) {
-        const req = new this.pool.request();
+    async ExecuteStoredPorcedure(name, params) {
+        //await this.pool;
+        const req = this.pool.request();
         for (var key in params) {
-            if (p.hasOwnProperty(key)) {
-                req.input(key, p[key]);
+            if (params.hasOwnProperty(key)) {
+                req.input(key, params[key]);
             }
         }
-        return req.execute(name)
+            return await req.execute(name)
     }
 
     CnvertToIdTable(list) {
-        const table = new  this.sql.Table();
+        const table = new this.sql.Table();
         table.columns.add("ID", this.sql.int);
         for (let i = 0; i < list.length; i++) {
             table.rows.add(list[i]);
@@ -29,14 +30,14 @@ class MssqlConnection {
     }
 
     GetQuestionOrderTable() {
-        const table = new  this.sql.Table();
+        const table = new this.sql.Table();
         table.columns.add("QuestionId", this.sql.int);
         table.columns.add("Index", this.sql.TinyInt);
         return table;
     }
 
     GetAnswersOrderTable() {
-        const table = new  this.sql.Table();
+        const table = new this.sql.Table();
         table.columns.add("AnswerId", this.sql.int);
         table.columns.add("QuestionId", this.sql.int);
         table.columns.add("Index", this.sql.TinyInt);
