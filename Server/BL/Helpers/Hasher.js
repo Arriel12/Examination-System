@@ -84,7 +84,7 @@ function  EncodeValue(value)
 function DecodeValue(value)
 {
     var decipher = crypto.createDecipher(algorithm, key);
-    var decrypted = decipher.update(encrypted, outputEncoding, inputEncoding);
+    var decrypted = decipher.update(value, outputEncoding, inputEncoding);
     decrypted += decipher.final(inputEncoding);
     return decrypted;
 }

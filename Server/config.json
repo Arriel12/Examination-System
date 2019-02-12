@@ -1,5 +1,5 @@
 {
-    "baseUrl": "localhost",
+    "baseUrl": "http://localhost",
     "CertGenerationUrl" : "/Certifcates",
     "SqlConfig" : {
         "user": "ExamSql",
@@ -10,7 +10,8 @@
             "max": 10,
             "min": 0,
             "idleTimeoutMillis": 30000
-        }
+        },
+        "connectionTimeout": 30000
     },
     "EncodingKey" : "avhdfij7wrtfjdo7bdvtre67egvc2",
     "HttpPort" : 8080,

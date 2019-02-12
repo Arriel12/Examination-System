@@ -13,23 +13,30 @@ router.post('/:examId', validate(Volidators.newExam),
     asyncWrapper(async function (req, res) {
         let student = req.body;
         let examId = req.params.examId;
-        let res =await manager.StartNewExam(examId, student);
-        res.status(200).send(res);
+        let result =await manager.StartNewExam(examId, student);
+        res.status(200).send(result);
     }));
 
-router.post('/:examId/answer', validate(Volidators.answer),
+router.post('/:studentExamId/answer', validate(Volidators.answer),
     asyncWrapper(async function (req, res) {
-        let examId = req.params.examId;
+        let studentExamId = req.params.studentExamId;
         let answers = req.body.answers;
         let questionId = req.body.questionId;
-        await manager.AnswerQuestion(examId, questionId, answers);
-        res.status(200).send();
+        let result =await manager.AnswerQuestion(studentExamId, questionId, answers);
+        if(result!=null &&result.recordsets[0]!=null &&  result.recordsets[0][0].Error!=undefined)
+        {
+            res.status(400).send(result.recordsets[0][0].Error);
+        }
+        else
+        {
+            res.sendStatus(200);
+        }
     }));
 
-router.post('/:examId/submit', asyncWrapper(async function (req, res) {
-    let examId = req.params.examId;
-    await manager.SubmitTest(examId);
-    res.status(200).send();
+router.post('/:studentExamId/submit', asyncWrapper(async function (req, res) {
+    let studentExamId = req.params.studentExamId;
+    let result =await manager.SubmitTest(studentExamId);
+    res.status(200).send(result);
 }));
 
 module.exports = router;

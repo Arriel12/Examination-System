@@ -1,4 +1,5 @@
 const Hasher = require('../Helpers/Hasher.js')
+const addPropertyIfMissing = require('../Helpers/ObjectHelpers.js').addPropertyIfMissing;
 class AdminExamsManager {
     constructor() {
         this.Db = require("../../DAL/MSSQL/MssqlConnection.js");
@@ -16,11 +17,18 @@ class AdminExamsManager {
 
     async CreateExam(orgId, data) {
         data['OrganizationId'] = orgId;
+        addPropertyIfMissing(data,'orgenaizerEmail',null);
+        addPropertyIfMissing(data,'certificateUrl',null);
+        addPropertyIfMissing(data,'successMailSubject',null);
+        addPropertyIfMissing(data,'successMailBody',null);
+        addPropertyIfMissing(data,'failMailSubject',null);
+        addPropertyIfMissing(data,'failMailBody',null);
+        
         data.questionsIds = this.Db.CnvertToIdTable(data.questionsIds);
         let res = await this.Db.ExecuteStoredPorcedure('CreateExam', data);
         return {
             examId:res.recordsets[0][0].ExamId,
-            url:global.gConfig.baseUrl + "/exams/" + Hasher.EncodeValue(element.Id.toString())
+            url:global.gConfig.baseUrl + "/exams/" + Hasher.EncodeValue(res.recordsets[0][0].ExamId.toString())
         };
     }
 
@@ -37,6 +45,19 @@ class AdminExamsManager {
 
     async UpdateExam(examId, data) {
         data.ExamId = examId;
+        addPropertyIfMissing(data,'language',null);
+        addPropertyIfMissing(data,'name',null);
+        addPropertyIfMissing(data,'openningText',null);
+        addPropertyIfMissing(data,'orgenaizerEmail',null);
+        addPropertyIfMissing(data,'passingGrade',null);
+        addPropertyIfMissing(data,'showAnswer',null);
+        addPropertyIfMissing(data,'certificateUrl',null);
+        addPropertyIfMissing(data,'successText',null);
+        addPropertyIfMissing(data,'failText',null);
+        addPropertyIfMissing(data,'successMailSubject',null);
+        addPropertyIfMissing(data,'successMailBody',null);     
+        addPropertyIfMissing(data,'failMailSubject',null);
+        addPropertyIfMissing(data,'failMailBody',null);
         data.questionsIds = this.Db.CnvertToIdTable(data.questionsIds);
         await this.Db.ExecuteStoredPorcedure('UpdateExam', data);
     }

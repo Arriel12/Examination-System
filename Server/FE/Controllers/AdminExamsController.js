@@ -37,6 +37,7 @@ router.post('/:org/:examId', _validateOrganization, validate(Validators.UpdateEx
         let examId = req.params.examId;
         let data = req.body;
         await manager.UpdateExam(examId, data)
+        res.sendStatus(200);
     }));
 
 function _validateOrganization(req, res, next) {

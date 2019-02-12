@@ -1,4 +1,4 @@
-const shuffle = require("../Helpers/ArrayHelper");
+const shuffle = require("../Helpers/ArrayHelpers").shuffle;
 const Mailer = require("../Helpers/Mailer");
 const Hasher = require("../Helpers/Hasher");
 
@@ -10,7 +10,7 @@ class StudentsExamManager {
     async StartNewExam(encodedExamId, student) {
         await this._createStudent(student);
         let examId = Hasher.DecodeValue(encodedExamId);
-        const exam = await this.Db.ExecuteStoredPorcedure('GetExamStudent', examId);
+        const exam = await this.Db.ExecuteStoredPorcedure('GetExamStudent', {examId:examId});
         let examDto =
         {
             examId: exam.recordsets[0][0].Id,
@@ -23,19 +23,23 @@ class StudentsExamManager {
         let qestions = exam.recordsets[1];
         let answers = exam.recordsets[2];
         await this._createStudentExam(qestions, answers, examDto, student);
+        examDto.examId = Hasher.EncodeValue(examDto.examId.toString());
+        examDto.id = Hasher.EncodeValue(examDto.id.toString());
         return examDto;
     }
 
     async AnswerQuestion(studentExamId, questionId, answerIds) {
+        studentExamId = Hasher.DecodeValue(studentExamId);
         let answersParms = {
             StudentExamId: studentExamId,
             QuestionId: questionId,
             AnswerIds: this.Db.CnvertToIdTable(answerIds)
         }       
-        await this.Db.ExecuteStoredPorcedure('SaveStudentAnswers', answersParms);
+        return await this.Db.ExecuteStoredPorcedure('SaveStudentAnswers', answersParms);
     }
 
     async SubmitTest(studentExamId) {
+        studentExamId = Hasher.DecodeValue(studentExamId);
         let SubmitParms =
         {
             StudentExamId: studentExamId,
@@ -44,9 +48,12 @@ class StudentsExamManager {
         let results = await this.Db.ExecuteStoredPorcedure('GetGrade',SubmitParms);
         results = results.recordsets[0][0];
         //genrate cert url
-        let certUrl = global.gConfig.baseUrl + global.gConfig.CertGenerationUrl +
-            '/' + Hasher.EncodeValue(studentExamId);
-
+        let certUrl = null;
+        if(results.CertificateUrl)
+        {
+            certUrl = global.gConfig.baseUrl + global.gConfig.CertGenerationUrl +
+                '/' + Hasher.EncodeValue(studentExamId);
+        }      
         //send mail
         if (results.OrganaizerEmail) {
             let body = Mailer.FormatEmailBody(results.Body, results.Name,
@@ -75,7 +82,7 @@ class StudentsExamManager {
         answerIdx = this._StructureQuestions(qestions, answerIdx, answers, answersOrder, examDto);
         this._SetQuestionsOrder(examDto, questionsOrder);
         let createStudentExamParms = {
-            ExamId: examDto.id,
+            ExamId: examDto.examId,
             StudentEmail: student.email,
             QuestionsOrder: questionsOrder,
             AnswersOrder: answersOrder
@@ -85,8 +92,8 @@ class StudentsExamManager {
         examDto.id = studenttestId;
     }
 
-    _StructureQuestions(qestions, answerIdx, answers, answersOrder, examDto) {
-        for (let i = 0; i < qestions.length; i++) {
+    _StructureQuestions(questions, answerIdx, answers, answersOrder, examDto) {
+        for (let i = 0; i < questions.length; i++) {
             let questionId = questions[i].Id;
             let question = {
                 id: questionId,

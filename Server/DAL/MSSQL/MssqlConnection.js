@@ -23,23 +23,24 @@ class MssqlConnection {
 
     CnvertToIdTable(list) {
         const table = new this.sql.Table();
-        table.columns.add("ID", this.sql.int);
+        table.columns.add("ID", this.sql.Int);
         for (let i = 0; i < list.length; i++) {
             table.rows.add(list[i]);
         }
+        return table;
     }
 
     GetQuestionOrderTable() {
         const table = new this.sql.Table();
-        table.columns.add("QuestionId", this.sql.int);
+        table.columns.add("QuestionId", this.sql.Int);
         table.columns.add("Index", this.sql.TinyInt);
         return table;
     }
 
     GetAnswersOrderTable() {
         const table = new this.sql.Table();
-        table.columns.add("AnswerId", this.sql.int);
-        table.columns.add("QuestionId", this.sql.int);
+        table.columns.add("AnswerId", this.sql.Int);
+        table.columns.add("QuestionId", this.sql.Int);
         table.columns.add("Index", this.sql.TinyInt);
         return table;
     }
