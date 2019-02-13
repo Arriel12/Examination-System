@@ -1,0 +1,6 @@
+CREATE TRIGGER tgr_examUpdatedOn
+ON Exams
+AFTER UPDATE AS
+  UPDATE Exams
+  SET  UpdatedOn = GETDATE()
+  WHERE Id IN (SELECT DISTINCT Id FROM Inserted)

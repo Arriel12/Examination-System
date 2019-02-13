@@ -5,8 +5,12 @@ class AdminExamsManager {
         this.Db = require("../../DAL/MSSQL/MssqlConnection.js");
     }
 
-    async ListExams(orgId) {
-        let res = await this.Db.ExecuteStoredPorcedure("GetExamsList", { OrganizationId: orgId });
+    async ListExams(orgId,catId) {
+        let parms ={ 
+            OrganizationId: orgId,
+            CategoryId: catId
+         };
+        let res = await this.Db.ExecuteStoredPorcedure("GetExamsList", parms);
         res = res.recordsets[0];
         res.forEach(element => {
             element.url = global.gConfig.baseUrl + "/exams/" +
@@ -15,8 +19,9 @@ class AdminExamsManager {
         return res;
     }
 
-    async CreateExam(orgId, data) {
+    async CreateExam(orgId,catId, data) {
         data['OrganizationId'] = orgId;
+        data['CategoryId'] = catId;
         addPropertyIfMissing(data,'orgenaizerEmail',null);
         addPropertyIfMissing(data,'certificateUrl',null);
         addPropertyIfMissing(data,'successMailSubject',null);
@@ -59,7 +64,17 @@ class AdminExamsManager {
         addPropertyIfMissing(data,'failMailSubject',null);
         addPropertyIfMissing(data,'failMailBody',null);
         data.questionsIds = this.Db.CnvertToIdTable(data.questionsIds);
-        await this.Db.ExecuteStoredPorcedure('UpdateExam', data);
+        return await this.Db.ExecuteStoredPorcedure('UpdateExam', data);
+    }
+
+    async DeleteExam(examId,organizationId,categoryId)
+    {
+        let parms = {
+            examId: examId,
+            organizationId:organizationId,
+            categoryId:categoryId
+        }
+        return await this.Db.ExecuteStoredPorcedure('DeleteExam',parms);
     }
 }
 
