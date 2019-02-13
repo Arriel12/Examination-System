@@ -1,0 +1,6 @@
+{
+    "scripts": {
+        "start": "node ./main.js",
+        "debug": "nodemon --inspect ./main.js"
+    }
+}
