@@ -1,7 +1,8 @@
-export interface ExamListEntery{
-    Id: number,
-    Name: string,
-    Questions: 3,
-    IsActive: boolean,
-    url: string
+export class ExamListEntery{
+    Id: string;
+    Name: string;
+    Questions: string;
+    IsActive: string;
+    url: string;
+    UpdatedOn: string;
 }

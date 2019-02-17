@@ -1,54 +1,58 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { AdminDataService } from './admin-data.service';
+import { ExamListEntery } from '../Models/examListEntery';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExamsDataService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private admin: AdminDataService) { }
 
-  GetList(organizationid: number, categoryId: number, token: string) {
-    let url = environment.apiEndpoint + '/admin/' + organizationid + '/' + categoryId;
-    let options = this.GetOptions(token);
+  GetList() {
+    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id +
+     '/' + this.admin.currentCategory.id;
+    let options = this.GetOptions();
+    return this.http.get<ExamListEntery[]>(url, options);
+  }
+
+  GetExam(examId: number) {
+    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id +
+     '/' + this.admin.currentCategory.id + '/' + examId;
+    let options = this.GetOptions();
     return this.http.get(url, options);
   }
 
-  GetExam(organizationid: number, categoryId: number, token: string, examId: number) {
-    let url = environment.apiEndpoint + '/admin/' + organizationid + '/' + categoryId +
-      '/' + examId;
-    let options = this.GetOptions(token);
-    return this.http.get(url, options);
-  }
-
-  UpdateExam(organizationid: number, categoryId: number, token: string, examId: number, data: object) {
-    let url = environment.apiEndpoint + '/admin/' + organizationid + '/' + categoryId +
-      '/' + examId;
-    let options = this.GetOptions(token);
+  UpdateExam(examId: number, data: object) {
+    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id + 
+    '/' + this.admin.currentCategory.id + '/' + examId;
+    let options = this.GetOptions();
     return this.http.post(url, data, options);
   }
 
-  CreateExam(organizationid: number, categoryId: number, token: string, data: object) {
-    let url = environment.apiEndpoint + '/admin/' + organizationid + '/' + categoryId +
+  CreateExam(data: object) {
+    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id +
+     '/' + this.admin.currentCategory.id +
       '/create';
-    let options = this.GetOptions(token);
+    let options = this.GetOptions();
     return this.http.post(url, data, options);
   }
 
-  CreateDelete(organizationid: number, categoryId: number, token: string, data: object) {
-    let url = environment.apiEndpoint + '/admin/' + organizationid + '/' + categoryId +
-      '/create';
-    let options = this.GetOptions(token);
+  DeleteExam(examId:number) {
+    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id +
+     '/' + this.admin.currentCategory.id + '/' + examId;
+    let options = this.GetOptions();
     return this.http.delete(url, options);
   }
 
-  private GetOptions(token: string) {
+  private GetOptions() {
     return {
       headers: new HttpHeaders
         ({
           'Content-Type': 'application/json',
-          'Authorization': 'bearer ' + token
+          'Authorization': 'Bearer ' + this.admin.token
         })
     };
   }
