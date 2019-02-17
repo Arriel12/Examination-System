@@ -4,6 +4,14 @@ function SetupRouting(app) {
         , bodyParser = require('body-parser')
         , cookieParser = require('cookie-parser');
 
+        //allow cors
+    app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods","GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        next();
+    });
+
     app.use(bodyParser.json())
     app.use(cookieParser())
 
@@ -12,7 +20,7 @@ function SetupRouting(app) {
     app.use('/exams', StudentExamsController);
 
     let AdminExamController = require('./FE/Controllers/AdminExamsController.js');
-    app.use('/admin/Exams',AdminExamController);
+    app.use('/admin/Exams', AdminExamController);
 
 
 

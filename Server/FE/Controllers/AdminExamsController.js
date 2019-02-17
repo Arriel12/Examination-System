@@ -11,32 +11,43 @@ const asyncWrapper = require("../Middaleware/AsyncWraper");
 
 router.use(authentication);
 
-router.get('/:org', _validateOrganization,
+router.get('/:org/:category', _validateOrganization,
     asyncWrapper(async function (req, res) {
         let orgId = req.params.org;
-        let results = await manager.ListExams(orgId);
+        let catId = req.params.category;
+        let results = await manager.ListExams(orgId,catId);
         res.status(200).send(results);
     }));
 
-router.post('/:org/Create', _validateOrganization, validate(Validators.newExam),
+router.post('/:org/:category/Create', _validateOrganization, validate(Validators.newExam),
     asyncWrapper(async function (req, res) {
         let orgId = req.params.org;
-        let results = await manager.CreateExam(orgId, req.body);
+        let catId = req.params.category;
+        let results = await manager.CreateExam(orgId,catId, req.body);
         res.status(200).send(results);
     }));
 
-router.get('/:org/:examId', _validateOrganization,
+router.get('/:org/:category/:examId', _validateOrganization,
     asyncWrapper(async function (req, res) {
         let examId = req.params.examId;
         let exam = await manager.GetExam(examId);
         res.status(200).send(exam);
     }));
 
-router.post('/:org/:examId', _validateOrganization, validate(Validators.UpdateExam),
+router.post('/:org/:category/:examId', _validateOrganization, validate(Validators.UpdateExam),
     asyncWrapper(async function (req, res) {
         let examId = req.params.examId;
         let data = req.body;
         await manager.UpdateExam(examId, data)
+        res.sendStatus(200);
+    }));
+
+    router.delete('/:org/:category/:examId', _validateOrganization,
+    asyncWrapper(async function (req, res) {
+        let examId = req.params.examId;
+        let org = req.params.org;
+        let category = req.params.category;
+        await manager.DeleteExam(examId,org,category);
         res.sendStatus(200);
     }));
 

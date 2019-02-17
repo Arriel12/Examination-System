@@ -1,0 +1,40 @@
+.categoyHeader
+{
+    color: orange;
+}
+
+.header
+{
+    font-weight: bolder;
+    text-align: center;
+}
+
+.header h2
+{
+    font-weight: bolder;
+}
+
+.serchDiv
+{
+    display: flex;
+}
+
+.ExamButtonDiv
+{
+    display: flex;
+}
+
+td
+{
+    vertical-align: middle;
+}
+
+.buttonTd
+{
+    padding: 0;
+}
+
+.buttonTd button
+{
+    padding: 5px;
+}
