@@ -2,5 +2,12 @@
     "scripts": {
         "start": "node ./main.js",
         "debug": "nodemon --inspect ./main.js"
+    },
+    "dependencies": {
+        "express": "^4.16.4",
+        "express-validation": "^1.0.2",
+        "joi": "^14.3.1",
+        "jsonwebtoken": "^8.4.0",
+        "mssql": "^4.3.2"
     }
 }
