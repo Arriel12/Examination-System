@@ -4,6 +4,7 @@
         "debug": "nodemon --inspect ./main.js"
     },
     "dependencies": {
+        "cookie-parser": "^1.4.4",
         "express": "^4.16.4",
         "express-validation": "^1.0.2",
         "joi": "^14.3.1",
