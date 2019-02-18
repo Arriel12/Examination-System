@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const validate = require('express-validation');
+
 const authentication = require('../Middaleware/Autentication.js');
-const validate = require('express-validation')
+const _validateOrganization = require("../Middaleware/OrganizationValidation");
+const asyncWrapper = require("../Middaleware/AsyncWraper");
 
 const Validators = require("../Validation/AdminExams.js");
 const AdminExamsManager = require("../../BL/Managers/AdminExamsManager.js");
+
 const manager = new AdminExamsManager();
 
-const asyncWrapper = require("../Middaleware/AsyncWraper");
 
 router.use(authentication);
 
@@ -50,24 +53,6 @@ router.post('/:org/:category/:examId', _validateOrganization, validate(Validator
         await manager.DeleteExam(examId,org,category);
         res.sendStatus(200);
     }));
-
-function _validateOrganization(req, res, next) {
-    let orgId;
-    try {
-        orgId = parseInt(req.params.org);
-    }
-    catch (err) {
-        res.sendStatus(400);
-        return;
-    }
-    if (req.token.organizations.includes(orgId)) {
-        next();
-    }
-    else {
-        res.sendStatus(403);
-    }
-}
-
 
 
 module.exports = router;
