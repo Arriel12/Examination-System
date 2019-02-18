@@ -22,7 +22,8 @@ function SetupRouting(app) {
     let AdminExamController = require('./FE/Controllers/AdminExamsController.js');
     app.use('/admin/Exams', AdminExamController);
 
-
+    let UsersController = require('./FE/Controllers/UsersController.js');
+    app.use('/admin',UsersController);
 
 
 
