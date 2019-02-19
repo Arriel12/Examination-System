@@ -1,6 +1,8 @@
 {
     "baseUrl": "http://localhost",
-    "CertGenerationUrl" : "/Certifcates",
+    "CertGenerationUrl" : "/certifcates",
+    "EmailValidationUrl":"/validate",
+    "RestPasswordUrl":"/resetpassword",
     "SqlConfig" : {
         "user": "ExamSql",
         "password": "12345678",
@@ -21,5 +23,16 @@
         "ttl" : 60,
         "aud" : "ExamAdmin",
         "iss" : "ExamAdmin"
+    },
+    "Mailler":{
+        "ValidationSender":"noreplay@exams.com",
+        "ValidationText":"click <a href='{url}'>here</a> to validate you'r account \n or use the url:{url}",
+        "ValidationSubject":"exams email verification",
+        "PasswordResetSender":"noreplay@exams.com",
+        "PasswordResetText":"click <a href='{url}'>here</a> to reset you'r account password\n or use the url:{url}",
+        "PasswordResetSubject":"exams password reset",
+        "Provider":"Gmail",
+        "User":"examsmanagersystem@gmail.com",
+        "Password":"Aa!23456"
     }
 }
