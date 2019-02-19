@@ -19,6 +19,11 @@ class AdminExamsManager {
         question.categories = this.Db.CnvertToIdTable(question.categories);
         return await this.Db.ExecuteStoredPorcedure("CreateQuestion",question);
     }
+
+    async ListQuestions(organizationId,categoryId)
+    {
+        return await this.Db.ExecuteStoredPorcedure("ListQuestions",{OrganizationId:orientation,CategoryId:categoryId});
+    } 
 }
 
 module.exports = AdminExamsManager;

@@ -13,12 +13,20 @@ const manager = new QuestionsManager();
 
 router.use(authentication);
 
-router.post('/:org/:category', validateOrganization,validate(Validators.newQuestion),
+router.post('/:org/:category', validateOrganization, validate(Validators.newQuestion),
     asyncWrapper(async function (req, res) {
         let orgId = req.params.org;
         let question = req.body
         question.categories = [req.params.category];
-        let results = await manager.CreateQuestion(question,orgId);
+        let results = await manager.CreateQuestion(question, orgId);
+        res.status(200).send(results);
+    }));
+
+router.get('/:org/:category', validateOrganization,
+    asyncWrapper(async function (req, res) {
+        let orgId = req.params.org;
+        let categoryId =req.params.category;
+        let results = await manager.ListQuestions(question, orgId);
         res.status(200).send(results);
     }));
 
