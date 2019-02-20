@@ -25,11 +25,11 @@ function SetupRouting(app) {
     let QuestionsController = require('./FE/Controllers/QuestionsController.js');
     app.use('/admin/questions', QuestionsController);
     
+    let CategoriesController = require('./FE/Controllers/CategoriesController.js');
+    app.use('/admin/categories',CategoriesController);
+
     let UsersController = require('./FE/Controllers/UsersController.js');
     app.use('/admin',UsersController);
-
-
-
 
 
 
