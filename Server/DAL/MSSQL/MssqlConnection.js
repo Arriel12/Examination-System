@@ -51,6 +51,15 @@ class MssqlConnection {
         table.columns.add("IsCorrect", this.sql.Bit);
         return table;
     }
+
+    GetAnswersUpdateTable()
+    {
+        const table = new this.sql.Table();
+        table.columns.add("Answer", this.sql.NVarChar(1000));
+        table.columns.add("IsCorrect", this.sql.Bit);
+        table.columns.add("Id", this.sql.Int);
+        return table;
+    }
 }
 const Db = new MssqlConnection();
 
