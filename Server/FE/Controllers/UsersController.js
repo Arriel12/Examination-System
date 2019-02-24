@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const validate = require('express-validation')
 
-const authentication = require('../Middaleware/Autentication.js');
 const asyncWrapper = require("../Middaleware/AsyncWraper");
 
 const LoginStatues = require("../../Common/Enums/LoginStatus.js");

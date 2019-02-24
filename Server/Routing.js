@@ -28,6 +28,9 @@ function SetupRouting(app) {
     let CategoriesController = require('./FE/Controllers/CategoriesController.js');
     app.use('/admin/categories',CategoriesController);
 
+    let ReportsController = require('./FE/Controllers/ReportsController.js');
+    app.use('/admin/reports',ReportsController);
+
     let UsersController = require('./FE/Controllers/UsersController.js');
     app.use('/admin',UsersController);
 
