@@ -35,11 +35,19 @@ class ReportsManager {
         let i = 0, j = 0;
         while (i < questions.length) {
             questions[i].answers = [];
+            let wrong = 0;
             while (j < answers.length && questions[i].Id === answers[j].QuestionId) {
                 questions[i].answers.push(answers[j]);
                 delete answers[j].QuestionId;
+                if((answers[j].IsSelected && !answers[j].IsCorrect)||
+                (!answers[j].IsSelected && answers[j].IsCorrect))
+                    wrong++;
                 j++;
             }
+            if(questions[i].answers.length>0 && wrong==0)
+                questions[i].IsCorrect = true;
+            else
+                questions[i].IsCorrect = false;
             i++;
         }
         return questions;
