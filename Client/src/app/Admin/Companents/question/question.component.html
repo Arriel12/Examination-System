@@ -1,0 +1,94 @@
+<div style="color:white;">
+
+<!-- Default form contact -->
+<form class="text-center border border-light p-5">
+
+    <p class="h4 mb-4">Create/ Edit Question</p>
+  
+    <p class="text-left"> Field: <b> {{questionCategory[0].name}}  </b> </p>
+
+    <div class="btn-group" mdbDropdown style="text-align: left; float: left;">
+         <button mdbDropdownToggle type="button" mdbBtn color="indigo" class="dropdown-toggle waves-light"
+        for="questionType" id="questionType" mdbWavesEffect>
+        Question Type:
+        </button> 
+
+        <div class="dropdown-menu dropdown-primary" id="questionType">
+            <a class="dropdown-item" *ngFor="let item of questionType">{{item.name}} </a>  
+        </div>
+    </div><br><br><br>
+
+    <!-- Question Text -->
+    <input type="text" id="questionText" class="form-control mb-4" placeholder="Question Text">
+  
+    <!-- text below question Text -->
+    <div class="form-group">
+       <textarea class="form-control rounded-6" id="textBelowQuestionText" rows="3" placeholder="Text below question"></textarea>
+    </div>
+  
+    <!-- Answers -->
+    <label>Answers</label>
+    <!-- <select class="browser-default custom-select mb-4 multiple">
+      <option value="" selected disabled>Choose option</option>
+      <option value="1">Feedback</option>
+      <option value="2">Report a bug</option>
+      <option value="3">Feature request</option>
+      <option value="4">Feature request</option>
+    </select> -->
+  
+    <!-- Message -->
+    <div class="form-group">
+      <textarea class="form-control rounded-6" id="answerQuestion" rows="2" placeholder="Write Answer"></textarea><br>
+      <textarea class="form-control rounded-6" id="answerQuestion" rows="2" placeholder="Write Answer"></textarea><br>
+      <textarea class="form-control rounded-6" id="answerQuestion" rows="2" placeholder="Write Answer"></textarea><br>
+      <textarea class="form-control rounded-6" id="answerQuestion" rows="2" placeholder="Write Answer"></textarea><br>
+    </div>
+
+    <!-- button to Add Answer -->
+    <button class="waves-light btn btn-amber" color="amber" mdbbtn mdbwaveseffect type="button">
+      Add Answer</button><br><br>
+  
+    <!-- Copy -->
+    <!-- <div class="row">
+      <div class="col-md-6 mx-auto d-flex justify-content-center">
+        <div class="custom-control custom-checkbox mb-4">
+          <input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
+          <label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- CheckBox to right answers-->
+    <span>Check the correct answers: </span> &nbsp;&nbsp;&nbsp;
+<mdb-checkbox [inline]="true" [default]="true">1</mdb-checkbox>
+
+<mdb-checkbox [inline]="true" [default]="true">2</mdb-checkbox>
+
+<mdb-checkbox [inline]="true" [default]="true">3</mdb-checkbox>
+
+<mdb-checkbox [inline]="true" [default]="true">4</mdb-checkbox>
+<br><br>
+
+    <!-- Horizontal or Vertical radio button-->
+   
+ <span style="text-decoration: underline">Answers layout: </span> &nbsp;&nbsp;&nbsp;
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" class="custom-control-input" id="vertical" name="radio" mdbInput checked>
+  <label class="custom-control-label" for="vertical">Vertical</label>
+</div>
+
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" class="custom-control-input" id="horizontal" name="radio" mdbInput>
+  <label class="custom-control-label" for="horizontal">Horizontal</label>
+</div>
+<br><br>
+  
+  
+    <!-- Send button -->
+    <button class="btn btn-info btn-block" type="submit">Save</button>
+  
+  </form>
+  <!-- Default form contact -->
+
+
+</div>

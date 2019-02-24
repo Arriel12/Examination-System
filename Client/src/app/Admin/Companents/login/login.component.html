@@ -1,0 +1,58 @@
+<!--Section: Live preview-->
+<section class="form-dark">
+
+  <!--Form without header-->
+  <div class="card card-image" style="background-image:url(https://www.muralswallpaper.com/app/uploads/grey-mist-forest-mural-wallpaper-plain.jpg);
+   width: 100%; height: 100%; background-size:cover">
+    <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+
+      <!--Header-->
+      <div class="text-center">
+        <h3 class="white-text mb-5 mt-4 font-weight-bold">
+          <strong>LOG</strong>
+          <a class="green-text font-weight-bold">
+            <strong> IN</strong>
+          </a>
+        </h3>
+      </div>
+
+      <!--Body-->
+      <form [formGroup]="LoginComponent" #f="ngForm" (ngSubmit)="signIn(f.value)">
+
+        <div class="md-form">
+          <input type="text" minlength="4" id="darkFormEmailEx" class="form-control white-text" formControlName="darkFormEmailEx" required mdbInput>
+          <label for="darkFormEmailEx">Your email</label>
+        </div>
+
+        <div class="md-form pb-3">
+          <input type="password" minlength="4" id="darkFormPasswordEx" class="form-control white-text" formControlName="darkFormPasswordEx" required mdbInput>
+          <label for="darkFormPasswordEx">Your password</label>
+       
+        </div>
+      </form>
+
+      <!--Grid row-->
+      <div class="row d-flex align-items-center mb-4">
+
+          <!-- <p>{{ form.value | json }}</p> -->
+        <!--Grid column-->
+        <div class="text-center mb-3 col-md-12">
+          <button type="button" mdbBtn color="success" block="true" rounded="true" class="z-depth-1 waves-light" mdbWavesEffect>Sign in</button>
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+
+      <!--Grid column-->
+      <div class="col-md-12">
+        <p class="font-small white-text d-flex justify-content-end">Don't have an account?
+          <a href="#" class="green-text ml-1 font-weight-bold"> Sign up</a>
+        </p>
+      </div>
+      <!--Grid column-->
+
+    </div>
+  </div>
+  <!--/Form without header-->
+</section>
+<!--Section: Live preview-->
