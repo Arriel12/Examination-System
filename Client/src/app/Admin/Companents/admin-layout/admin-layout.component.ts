@@ -11,6 +11,9 @@ import { AdminDataService } from '../../Services/admin-data.service';
 export class AdminLayoutComponent {
 
   studyList:Category[];
+  selectedTitle ="Choose a field of study";
+  isEmptyCategory = true;
+
   constructor(private admin:AdminDataService) { 
     this.admin.getCategories(categories=>{
       this.studyList=categories;});
@@ -19,6 +22,8 @@ export class AdminLayoutComponent {
   setCategory(category:Category)
   {
     this.admin.setCurrentCategory(category);
+    this.selectedTitle = category.Name;
+    this.isEmptyCategory = false;
   }
 
 }

@@ -30,6 +30,17 @@
        
         </div>
       </form>
+<!--Grid row-->
+<div class="row d-flex align-items-center mb-4" *ngIf="invalidLogin">
+
+  <!-- <p>{{ form.value | json }}</p> -->
+<!--Grid column-->
+<div class="text-center mb-3 col-md-12 error">
+  {{loginError}}
+</div>
+<!--Grid column-->
+</div>
+<!--Grid row-->
 
       <!--Grid row-->
       <div class="row d-flex align-items-center mb-4">

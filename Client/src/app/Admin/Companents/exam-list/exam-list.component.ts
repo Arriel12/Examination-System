@@ -2,7 +2,7 @@ import { Component, OnInit, Input, HostListener, ChangeDetectorRef, AfterViewIni
 import { MdbTableService, MdbTablePaginationComponent } from 'angular-bootstrap-md';
 
 import { Category } from '../../Models/category';
-import {ExamListEntery} from '../../Models/examListEntery'
+import { ExamListEntery } from '../../Models/examListEntery'
 import { ExamsDataService } from '../../Services/exams-data.service';
 import { AdminDataService } from '../../Services/admin-data.service';
 
@@ -17,7 +17,7 @@ export class ExamListComponent implements OnInit, AfterViewInit {
 
 
   headElements: string[] = ['Id', 'Link', 'Name', 'Number of questions',
-  'Last Update',''];
+    'Last Update', ''];
 
   category: Category;
   elements: ExamListEntery[];
@@ -26,33 +26,41 @@ export class ExamListComponent implements OnInit, AfterViewInit {
   firstItemIndex: number;
   lastItemIndex: number;
 
-  constructor(private examsData:ExamsDataService,
-      private admin:AdminDataService,
-      private tableService: MdbTableService,
-      private cdRef: ChangeDetectorRef) {
-        this.category = admin.getCategory();
-        this.examsData.GetList().subscribe(data=>{
-          this.elements=data.map(item=> {
-            for (const key in item) {
-              if (item.hasOwnProperty(key))           
-                 item[key] = item[key].toString();        
-              }
-            return item;
-          });
-          this.tableService.setDataSource(this.elements);
-          this.tableService.searchLocalDataBy("test");
-          this.elements = this.tableService.getDataSource();
-          this.previous = this.tableService.getDataSource();
-        });
-   }
+  constructor(private examsData: ExamsDataService,
+    private admin: AdminDataService,
+    private tableService: MdbTableService,
+    private cdRef: ChangeDetectorRef) {
+    this.category = admin.getCategory();
+    this.GetExams();
+    this.admin.CategoryChanged.subscribe(category => {
+      this.GetExams();
+      this.category = category;
+    })
+  }
 
-   @HostListener('input') oninput() {
+  private GetExams() {
+    this.examsData.GetList().subscribe(data => {
+      this.elements = data.map(item => {
+        for (const key in item) {
+          if (item.hasOwnProperty(key))
+            item[key] = item[key].toString();
+        }
+        return item;
+      });
+      this.tableService.setDataSource(this.elements);
+      this.tableService.searchLocalDataBy("test");
+      this.elements = this.tableService.getDataSource();
+      this.previous = this.tableService.getDataSource();
+    });
+  }
+
+  @HostListener('input') oninput() {
     this.searchItems();
   }
 
   ngOnInit() {
-    
-    
+
+
   }
 
   ngAfterViewInit() {
@@ -90,19 +98,16 @@ export class ExamListComponent implements OnInit, AfterViewInit {
 
   }
 
-  delete(test:ExamListEntery,index)
-  {
+  delete(test: ExamListEntery, index) {
     this.examsData.DeleteExam(parseInt(test.Id));
     this.tableService.removeRow(index);
   }
 
-  update(test:ExamListEntery,index)
-  {
-    
+  update(test: ExamListEntery, index) {
+
   }
 
-  create()
-  {
-    
+  create() {
+
   }
 }
