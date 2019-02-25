@@ -7,7 +7,7 @@ function validateOrganization(req, res, next) {
         res.sendStatus(400);
         return;
     }
-    if (req.token.organizations.includes(orgId)) {
+    if (req.token.organizations.map(org=>org.Id).includes(orgId)) {
         next();
     }
     else {
