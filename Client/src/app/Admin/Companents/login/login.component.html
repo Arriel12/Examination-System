@@ -17,15 +17,15 @@
       </div>
 
       <!--Body-->
-      <form [formGroup]="LoginComponent" #f="ngForm" (ngSubmit)="signIn(f.value)">
+      <form [formGroup]="LoginComponent" #f="ngForm">
 
         <div class="md-form">
-          <input type="text" minlength="4" id="darkFormEmailEx" class="form-control white-text" formControlName="darkFormEmailEx" required mdbInput>
+          <input type="text" minlength="4" #darkFormEmailEx class="form-control white-text" formControlName="darkFormEmailEx" required mdbInput>
           <label for="darkFormEmailEx">Your email</label>
         </div>
 
         <div class="md-form pb-3">
-          <input type="password" minlength="4" id="darkFormPasswordEx" class="form-control white-text" formControlName="darkFormPasswordEx" required mdbInput>
+          <input type="password" minlength="4" #darkFormPasswordEx class="form-control white-text" formControlName="darkFormPasswordEx" required mdbInput>
           <label for="darkFormPasswordEx">Your password</label>
        
         </div>
@@ -37,7 +37,7 @@
           <!-- <p>{{ form.value | json }}</p> -->
         <!--Grid column-->
         <div class="text-center mb-3 col-md-12">
-          <button type="button" mdbBtn color="success" block="true" rounded="true" class="z-depth-1 waves-light" mdbWavesEffect>Sign in</button>
+          <button type="button" mdbBtn color="success" block="true" rounded="true" class="z-depth-1 waves-light" mdbWavesEffect (click)="signIn()">Sign in</button>
         </div>
         <!--Grid column-->
       </div>

@@ -1,14 +1,13 @@
 import { TitleHeaderService } from './title-header/title-header.service';
-import { LoginService } from './Admin/Services/login.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {TableModule,MDBBootstrapModule,IconsModule} from 'angular-bootstrap-md';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-
+import {JwtModule} from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +24,7 @@ import { MainComponent } from './Admin/Companents/main/main.component';
 import { AdminLayoutComponent } from './Admin/Companents/admin-layout/admin-layout.component';
 import { TitleHeaderComponent } from './title-header/title-header.component';
 import { UserLayoutComponent } from './User/user-layout/user-layout.component';
+import { TokenInterceptor } from './Admin/Services/AuthInterceptor'
 
 @NgModule({
   declarations: [
@@ -51,13 +51,18 @@ import { UserLayoutComponent } from './User/user-layout/user-layout.component';
     //BrowserAnimationsModule,
     FormsModule,
     IconsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    JwtModule
   ],
   providers: [
-    LoginService,
     RegisterService,
     QuestionService, 
     TitleHeaderService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

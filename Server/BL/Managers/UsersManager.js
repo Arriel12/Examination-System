@@ -21,7 +21,7 @@ class UsersManager {
             jwt: null,
             status: LoginStatues.WorngUserNameOrPassword
         }
-        if (res.recordsets[0].length > 0 &&
+        if (res.recordsets[0].length > 0 && res.recordsets[0][0].UserId !=null &&
             await Hasher.Verify(password, res.recordsets[0][0].PasswordHash)) {
             if (res.recordsets[0][0].Verified) {
                 response.jwt = JWT.create(res.recordsets[0][0].UserId, user);
