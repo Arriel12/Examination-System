@@ -1,5 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../../Models/category';
+import { AdminDataService } from '../../Services/admin-data.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -8,12 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminLayoutComponent {
 
-  studyList = [
-    {id:1, name:"development" },
-    {id:2, name:"art" },
-  ]
-  constructor() { }
+  studyList:Category[];
+  constructor(private admin:AdminDataService) { 
+    this.admin.getCategories(categories=>{
+      this.studyList=categories;});
+  }
 
-
+  setCategory(category:Category)
+  {
+    this.admin.setCurrentCategory(category);
+  }
 
 }

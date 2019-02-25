@@ -30,7 +30,7 @@ export class ExamListComponent implements OnInit, AfterViewInit {
       private admin:AdminDataService,
       private tableService: MdbTableService,
       private cdRef: ChangeDetectorRef) {
-        this.category = admin.currentCategory;
+        this.category = admin.getCategory();
         this.examsData.GetList().subscribe(data=>{
           this.elements=data.map(item=> {
             for (const key in item) {

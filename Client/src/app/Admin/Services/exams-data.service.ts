@@ -12,37 +12,37 @@ export class ExamsDataService {
   constructor(private http: HttpClient, private admin: AdminDataService) { }
 
   GetList() {
-    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id +
-     '/' + this.admin.currentCategory.id;
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.getOrganization().Id +
+     '/' + this.admin.getCategory().Id;
     let options = this.GetOptions();
     return this.http.get<ExamListEntery[]>(url, options);
   }
 
   GetExam(examId: number) {
-    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id +
-     '/' + this.admin.currentCategory.id + '/' + examId;
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.getOrganization().Id +
+     '/' + this.admin.getCategory().Id + '/' + examId;
     let options = this.GetOptions();
     return this.http.get(url, options);
   }
 
   UpdateExam(examId: number, data: object) {
-    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id + 
-    '/' + this.admin.currentCategory.id + '/' + examId;
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.getOrganization().Id + 
+    '/' + this.admin.getCategory().Id + '/' + examId;
     let options = this.GetOptions();
     return this.http.post(url, data, options);
   }
 
   CreateExam(data: object) {
-    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id +
-     '/' + this.admin.currentCategory.id +
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.getOrganization().Id +
+     '/' + this.admin.getCategory().Id +
       '/create';
     let options = this.GetOptions();
     return this.http.post(url, data, options);
   }
 
   DeleteExam(examId:number) {
-    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id +
-     '/' + this.admin.currentCategory.id + '/' + examId;
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.getOrganization().Id +
+     '/' + this.admin.getCategory().Id + '/' + examId;
     let options = this.GetOptions();
     return this.http.delete(url, options);
   }

@@ -12,7 +12,7 @@ export class ExamFormComponent implements OnInit {
   category: Category;
 
   constructor(private admin: AdminDataService) {
-    this.category = admin.currentCategory;
+    this.category = admin.getCategory();
   }
 
   ngOnInit() {

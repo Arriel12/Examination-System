@@ -9,9 +9,7 @@
                 </button>  
         
                  <div class="dropdown-menu dropdown-primary" id="studyList">
-                    <a class="dropdown-item" *ngFor="let item of studyList">{{item.name}} </a>
-                    <a class="dropdown-item" href="#">Dropdown link</a>
-                    <a class="dropdown-item" href="#">Dropdown link</a> 
+                    <a class="dropdown-item" *ngFor="let item of studyList" (click)="setCategory(item)">{{item.Name}} </a>
                     
                 </div>
             </div><br>

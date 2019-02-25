@@ -5,7 +5,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a } from '@angular/platform-browser-dynamic';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,13 @@ export class AdminDataService {
   constructor(private http: HttpClient) {
   }
 
-  token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTU1MDM5NTE4My40NDgsImV4cCI6MTU1Mzk5NTE4My40NDgsIm9yZ2FuaXphdGlvbnMiOlsxXSwiYXVkIjoiRXhhbUFkbWluIiwiaXNzIjoiRXhhbUFkbWluIn0.u--ocEYnAEs3-vFEv3tb5H3JoM9wBI5JQDm1h8o6fwg';
-  currentCategory: Category = { name: 'a', id: 1 };
-  currentOrganization: Organization = { name: 'dev', id: 1 };
-  Organizations: Organization[] = [{ name: 'dev', id: 1 }];
+  //token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTU1MDM5NTE4My40NDgsImV4cCI6MTU1Mzk5NTE4My40NDgsIm9yZ2FuaXphdGlvbnMiOlsxXSwiYXVkIjoiRXhhbUFkbWluIiwiaXNzIjoiRXhhbUFkbWluIn0.u--ocEYnAEs3-vFEv3tb5H3JoM9wBI5JQDm1h8o6fwg';
+  private  currentCategory: Category;
+  private currentOrganization: Organization;
+  private Organizations: Organization[];
+  private categoriesOrganizationId: number;
+  private categories: Category[];
+
 
   getToken() {
     return localStorage.getItem('token');
@@ -40,6 +43,7 @@ export class AdminDataService {
         this.Organizations = pyload.organizations;
         if (this.Organizations.length > 0)
           this.currentOrganization = this.Organizations[0];
+          localStorage.setItem('organization',JSON.stringify(this.currentOrganization));
       }
       else if (resp.status == 401)
         err = 'invalid username or password';
@@ -52,8 +56,8 @@ export class AdminDataService {
 
   isLoggedIn() {
     let jwt = new JwtHelperService();
-    let token = this.getToken(); 
-    return token!=null && !jwt.isTokenExpired(token);
+    let token = this.getToken();
+    return token != null && !jwt.isTokenExpired(token);
   }
 
   logout() {
@@ -61,6 +65,39 @@ export class AdminDataService {
     this.Organizations = null;
     this.currentCategory = null;
     this.currentOrganization = null;
+  }
+
+  getCategories(callbeck) {
+    if (this.categories == null ||
+      this.categoriesOrganizationId != this.getOrganization().Id) {
+      let url = environment.adminApiEndpoint + "/categories/" + this.getOrganization().Id;
+      this.http.get<Category[]>(url, { observe: 'response' }).subscribe(resp => {
+        if (resp.status == 200) {
+          this.categories = resp.body;
+          this.categoriesOrganizationId = this.getOrganization().Id;
+          callbeck(this.categories);
+        }
+      });
+    }
+    else
+      callbeck(this.categories);
+  }
+
+  setCurrentCategory(category:Category)
+  {
+    this.currentCategory = category;
+  }
+
+  getCategory()
+  {
+    return this.currentCategory;
+  }
+
+  getOrganization()
+  {
+    if(!this.currentOrganization)
+      this.currentOrganization = JSON.parse(localStorage.getItem('organization'));
+    return this.currentOrganization;
   }
 
 }
