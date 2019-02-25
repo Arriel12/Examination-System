@@ -51,11 +51,18 @@ router.post('/:org/:category/:question', validateOrganization,
         let orgId = req.params.org;
         let categoryId = req.params.category;
         let questionId = req.params.question;
-        let results = await manager.UpdateQuestion(orgId, categoryId, questionId,req.body);
+        let results = await manager.UpdateQuestion(orgId, categoryId, questionId, req.body);
         if (results === SqlStatus.ArgumentsError)
             res.status(400).send("invalid parameters was given");
         else
             res.sendStatus(200);
     }));
+
+router.delete('/:org/:category/:question', validateOrganization, asyncWrapper(async function (req, res) {
+    let orgId = req.params.org;
+    let questionId = req.params.question;
+    let results = await manager.DeleteQuestion(orgId,questionId);
+    res.status(200).send(results);
+}))
 
 module.exports = router;

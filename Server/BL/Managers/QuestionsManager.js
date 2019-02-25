@@ -71,6 +71,12 @@ class AdminExamsManager {
             };
     }
 
+    async DeleteQuestion(organizationId,questionId)
+    {
+        let res = await this.Db.ExecuteStoredPorcedure("DeleteQuestion",{QuestionId:questionId,OrganizationId:organizationId});
+        return res.recordsets[0][0];
+    }
+
     _fillQuestionUpdateData(data, organizationId, categoryId, questionId) {
         OjectHelper.addPropertyIfMissing(data, "isHorizontal", null);
         OjectHelper.addPropertyIfMissing(data, "question", null);

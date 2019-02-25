@@ -23,7 +23,8 @@ import { MainComponent } from './Admin/Companents/main/main.component';
 import { AdminLayoutComponent } from './Admin/Companents/admin-layout/admin-layout.component';
 import { TitleHeaderComponent } from './title-header/title-header.component';
 import { UserLayoutComponent } from './User/user-layout/user-layout.component';
-import { TokenInterceptor } from './Admin/Services/AuthInterceptor'
+import { TokenInterceptor } from './Admin/Services/AuthInterceptor';
+import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component'
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { TokenInterceptor } from './Admin/Services/AuthInterceptor'
     AdminLayoutComponent,
     TitleHeaderComponent,
     UserLayoutComponent,
+    QuestionListComponent,
   ],
   imports: [
     BrowserModule,

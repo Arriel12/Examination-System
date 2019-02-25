@@ -1,0 +1,55 @@
+<div class="header">
+  <h2>Available questions for <span class='categoyHeader'>{{category.Name}}</span></h2>
+</div>
+<div class="row">
+  <div class="col-md-12 mx-auto">
+    <div class="md-form">
+      <div class='serchDiv'>
+        <label for="search">filter by key words:</label>
+        <input mdbInput type="text" [(ngModel)]="searchText" name="serch" class="form-control" id="search">
+      </div>
+    </div>
+  </div>
+</div>
+<table mdbTable mdbTable stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+  <thead class="sticky-top">
+    <tr>
+      <th *ngFor="let head of headElements; let i = index" scope="col" [mdbTableSort]="elements" [sortBy]="headElements[i]">
+        {{head}}  <mdb-icon fa icon="sort" class="fa" *ngIf='head!=""'></mdb-icon>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let el of elements; let i = index" class="resultRow">
+      <th *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" scope="row">{{el.Id}}</th>
+      <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >
+        <div>
+          {{el.Question}}
+          {{el.Tags}}
+        </div>
+      </td>
+      <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >{{el.UpdatedOn | date:'HH:mm dd/MM/yyyy'}}</td>
+      <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >
+        <span  *ngIf="!el.IsMultipleChoice">Single choice  </span>
+        <span  *ngIf="el.IsMultipleChoice">Muliple choice  </span>
+      </td>
+      <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >{{el.Exams}}</td>
+      <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >
+        <div class="ExamButtonDiv buttonTd">
+          <div *ngIf="el.Exams=='0'"><button (click)="update(el,i)" type="button" mdbBtn color="dark" mdbWavesEffect>Update</button></div>
+          <div class="activeText" *ngIf="el.Exams!='0'">Active</div>
+          <div *ngIf="el.Exams=='0'"><button (click)="delete(el,i)" type="button" mdbBtn color="dark" mdbWavesEffect >Delete</button></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="grey lighten-5 w-100">
+      <tr>
+        <td><mdb-icon (click)="create()" far icon="plus-square" class="fa"></mdb-icon></td>
+        <td colspan="4">
+          <mdb-table-pagination (nextPageClick)="onNextPageClick($event)" (previousPageClick)="onPreviousPageClick($event)">
+          </mdb-table-pagination>
+        </td>
+      </tr>
+    </tfoot>
+</table>

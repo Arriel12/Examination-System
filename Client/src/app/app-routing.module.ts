@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Admin/Companents/login/login.component';
 import {AuthGuardService as AuthGuard } from './Admin/Services/auth-guard.service'
 import {CategoryGuardService as CateegoryGuard} from './Admin/Services/category-guard.service'
+import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
 
 
 const routes: Routes = [
@@ -43,6 +44,11 @@ const routes: Routes = [
         path: 'exams/create',
         canActivate: [AuthGuard,CateegoryGuard],
         component: ExamFormComponent
+      },  
+      {
+        path: 'questions',
+        canActivate: [AuthGuard,CateegoryGuard],
+        component: QuestionListComponent
       },     
     ]
   }
