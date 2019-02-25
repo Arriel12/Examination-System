@@ -8,7 +8,7 @@ import { UserLayoutComponent } from './User/user-layout/user-layout.component';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Admin/Companents/login/login.component';
 import {AuthGuardService as AuthGuard } from './Admin/Services/auth-guard.service'
-
+import {CategoryGuardService as CateegoryGuard} from './Admin/Services/category-guard.service'
 
 
 const routes: Routes = [
@@ -31,17 +31,17 @@ const routes: Routes = [
     children:[
       {
         path: 'createQuestion',
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard,CateegoryGuard],
         component: QuestionComponent
       },
       {
-        path: 'exams/:organizationId/:categoryId',
-        canActivate: [AuthGuard],
+        path: 'exams',
+        canActivate: [AuthGuard,CateegoryGuard],
         component: ExamListComponent
       },
       {
-        path: 'exams/:organizationId/:categoryId/create',
-        canActivate: [AuthGuard],
+        path: 'exams/create',
+        canActivate: [AuthGuard,CateegoryGuard],
         component: ExamFormComponent
       },     
     ]

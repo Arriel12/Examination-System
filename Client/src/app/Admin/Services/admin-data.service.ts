@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Category } from '../Models/category';
 import { Organization } from '../Models/organization';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
@@ -16,41 +16,56 @@ export class AdminDataService {
   }
 
   //token: string = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTU1MDM5NTE4My40NDgsImV4cCI6MTU1Mzk5NTE4My40NDgsIm9yZ2FuaXphdGlvbnMiOlsxXSwiYXVkIjoiRXhhbUFkbWluIiwiaXNzIjoiRXhhbUFkbWluIn0.u--ocEYnAEs3-vFEv3tb5H3JoM9wBI5JQDm1h8o6fwg';
-  private  currentCategory: Category;
+  private currentCategory: Category;
   private currentOrganization: Organization;
   private Organizations: Organization[];
   private categoriesOrganizationId: number;
   private categories: Category[];
+  public CategoryChanged: EventEmitter<Category> = new EventEmitter();
+
 
 
   getToken() {
     return localStorage.getItem('token');
   }
 
-  LogIn(username, password, callbeck = null) {
+  register(username: string, password: string) {
+    let creds = {
+      "username": username,
+      "password": password
+    };
+    let url = environment.adminApiEndpoint + "/register";
+    return this.http.post(url, creds);
+  }
+
+  LogIn(username: string, password: string, callbeck = null) {
     let creds = {
       "username": username,
       "password": password
     };
     let url = environment.adminApiEndpoint + "/login";
     this.http.post(url, creds, { observe: 'response', responseType: 'text' }).subscribe(resp => {
-      let err = null;
-      if (resp.status == 200) {
-        let token = resp.headers.get("x-token");
-        localStorage.setItem('token', token);
-        let jwt = new JwtHelperService();
-        let pyload = jwt.decodeToken(localStorage.getItem('token'));
-        this.Organizations = pyload.organizations;
-        if (this.Organizations.length > 0)
-          this.currentOrganization = this.Organizations[0];
-          localStorage.setItem('organization',JSON.stringify(this.currentOrganization));
-      }
-      else if (resp.status == 401)
-        err = 'invalid username or password';
-      else
-        err = 'unknown error please try agin later.';
+      let token = resp.headers.get("x-token");
+      localStorage.setItem('token', token);
+      let jwt = new JwtHelperService();
+      let pyload = jwt.decodeToken(localStorage.getItem('token'));
+      this.Organizations = pyload.organizations;
+      if (this.Organizations.length > 0)
+        this.currentOrganization = this.Organizations[0];
+      localStorage.setItem('organization', JSON.stringify(this.currentOrganization));
       if (callbeck != null)
-        callbeck(err);
+        callbeck('');
+    }, error => {
+      if (error.error instanceof ErrorEvent) {
+        // A client-side or network error occurred. Handle it accordingly.
+        console.error('An error occurred:', error.error.message);
+        callbeck('unknown error please try agin later.');
+      } else if (callbeck != null) {
+        if (error.status == 401)
+          callbeck('invalid username or password');
+        else
+          callbeck('unknown error please try agin later.');
+      }
     });
   }
 
@@ -67,35 +82,36 @@ export class AdminDataService {
     this.currentOrganization = null;
   }
 
+  sendRestPasswordEmail(email: string) {
+    let url = environment.adminApiEndpoint + "/sendresetemail";
+    return this.http.post(url, { username: email });
+  }
+
   getCategories(callbeck) {
     if (this.categories == null ||
       this.categoriesOrganizationId != this.getOrganization().Id) {
       let url = environment.adminApiEndpoint + "/categories/" + this.getOrganization().Id;
       this.http.get<Category[]>(url, { observe: 'response' }).subscribe(resp => {
-        if (resp.status == 200) {
-          this.categories = resp.body;
-          this.categoriesOrganizationId = this.getOrganization().Id;
-          callbeck(this.categories);
-        }
+        this.categories = resp.body;
+        this.categoriesOrganizationId = this.getOrganization().Id;
+        callbeck(this.categories);
       });
     }
     else
       callbeck(this.categories);
   }
 
-  setCurrentCategory(category:Category)
-  {
+  setCurrentCategory(category: Category) {
     this.currentCategory = category;
+    this.CategoryChanged.emit(this.currentCategory);
   }
 
-  getCategory()
-  {
+  getCategory() {
     return this.currentCategory;
   }
 
-  getOrganization()
-  {
-    if(!this.currentOrganization)
+  getOrganization() {
+    if (!this.currentOrganization)
       this.currentOrganization = JSON.parse(localStorage.getItem('organization'));
     return this.currentOrganization;
   }

@@ -1,5 +1,5 @@
 <div class="header">
-  <h2>Available tests for <span class='categoyHeader'>{{category.name}}</span></h2>
+  <h2>Available tests for <span class='categoyHeader'>{{category.Name}}</span></h2>
 </div>
 <div class="row">
   <div class="col-md-12 mx-auto">
@@ -20,7 +20,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let el of elements; let i = index">
+    <tr *ngFor="let el of elements; let i = index" class="resultRow">
       <th *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" scope="row">{{el.Id}}</th>
       <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" class="red-text buttonTd"><button type="button" mdbBtn color="dark" mdbWavesEffect [copy-clipboard]="el.url">Copy link</button></td>
       <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >{{el.Name}}</td>

@@ -18,7 +18,6 @@ import { ExamFormComponent } from './Admin/Companents/exam-form/exam-form.compon
 import { LoginComponent } from './Admin/Companents/login/login.component';
 import { RegisterComponent } from './Admin/Companents/register/register.component';
 import { QuestionComponent } from './Admin/Companents/question/question.component';
-import { RegisterService } from './Admin/Services/register.service';
 import { QuestionService } from './Admin/Services/question.service';
 import { MainComponent } from './Admin/Companents/main/main.component';
 import { AdminLayoutComponent } from './Admin/Companents/admin-layout/admin-layout.component';
@@ -55,7 +54,6 @@ import { TokenInterceptor } from './Admin/Services/AuthInterceptor'
     JwtModule
   ],
   providers: [
-    RegisterService,
     QuestionService, 
     TitleHeaderService,
     {

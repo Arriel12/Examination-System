@@ -18,6 +18,7 @@
 .serchDiv
 {
     display: flex;
+    color: white;
 }
 
 .ExamButtonDiv
@@ -38,4 +39,8 @@ td
 .buttonTd button
 {
     padding: 5px;
+}
+
+.resultRow{
+    color: white;
 }
