@@ -12,28 +12,28 @@ export class ExamsDataService {
   constructor(private http: HttpClient, private admin: AdminDataService) { }
 
   GetList() {
-    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id +
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id +
      '/' + this.admin.currentCategory.id;
     let options = this.GetOptions();
     return this.http.get<ExamListEntery[]>(url, options);
   }
 
   GetExam(examId: number) {
-    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id +
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id +
      '/' + this.admin.currentCategory.id + '/' + examId;
     let options = this.GetOptions();
     return this.http.get(url, options);
   }
 
   UpdateExam(examId: number, data: object) {
-    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id + 
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id + 
     '/' + this.admin.currentCategory.id + '/' + examId;
     let options = this.GetOptions();
     return this.http.post(url, data, options);
   }
 
   CreateExam(data: object) {
-    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id +
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id +
      '/' + this.admin.currentCategory.id +
       '/create';
     let options = this.GetOptions();
@@ -41,7 +41,7 @@ export class ExamsDataService {
   }
 
   DeleteExam(examId:number) {
-    let url = environment.apiEndpoint + '/admin/exams/' + this.admin.currentOrganization.id +
+    let url = environment.adminApiEndpoint + '/exams/' + this.admin.currentOrganization.id +
      '/' + this.admin.currentCategory.id + '/' + examId;
     let options = this.GetOptions();
     return this.http.delete(url, options);
@@ -52,7 +52,7 @@ export class ExamsDataService {
       headers: new HttpHeaders
         ({
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + this.admin.token
+          //'Authorization': 'Bearer ' + this.admin.token
         })
     };
   }
