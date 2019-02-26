@@ -4,6 +4,7 @@ import { Category } from '../../Models/category';
 import { QuestionService } from '../../Services/question.service';
 import { AdminDataService } from '../../Services/admin-data.service';
 import { QuestionListEntery } from '../../Models/QuestionListEntery';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question-list',
@@ -27,7 +28,8 @@ export class QuestionListComponent implements OnInit, AfterViewInit {
   constructor(private questionsData: QuestionService,
     private admin: AdminDataService,
     private tableService: MdbTableService,
-    private cdRef: ChangeDetectorRef) {
+    private cdRef: ChangeDetectorRef,
+    private router: Router) {
     this.category = admin.getCategory();
     this.GetQuestions();
     this.admin.CategoryChanged.subscribe(category => {
@@ -97,7 +99,7 @@ export class QuestionListComponent implements OnInit, AfterViewInit {
   }
 
   delete(question: QuestionListEntery, index) {
-    this.questionsData.delete(parseInt(question.Id));
+    this.questionsData.delete(parseInt(question.Id)).subscribe(d=>{});
     this.tableService.removeRow(index);
   }
 
@@ -106,7 +108,11 @@ export class QuestionListComponent implements OnInit, AfterViewInit {
   }
 
   create() {
+    this.router.navigate(['/admin/questions/create']);
+  }
 
+  ShowQuestion(questionEntery:QuestionListEntery,index){
+    
   }
 
 }

@@ -7,8 +7,8 @@ import { ExamFormComponent } from './Admin/Companents/exam-form/exam-form.compon
 import { UserLayoutComponent } from './User/user-layout/user-layout.component';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Admin/Companents/login/login.component';
-import {AuthGuardService as AuthGuard } from './Admin/Services/auth-guard.service'
-import {CategoryGuardService as CateegoryGuard} from './Admin/Services/category-guard.service'
+import { AuthGuardService as AuthGuard } from './Admin/Services/auth-guard.service'
+import { CategoryGuardService as CateegoryGuard } from './Admin/Services/category-guard.service'
 import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
 
 
@@ -18,7 +18,7 @@ const routes: Routes = [
   //    component: AppComponent
   //  },
   {
-    path: 'user', 
+    path: 'user',
     component: UserLayoutComponent
   },
   {
@@ -26,30 +26,30 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'admin', 
+    path: 'admin',
     component: AdminLayoutComponent,
     canActivate: [AuthGuard],
-    children:[
-      {
-        path: 'createQuestion',
-        canActivate: [AuthGuard,CateegoryGuard],
-        component: QuestionComponent
-      },
+    children: [
       {
         path: 'exams',
-        canActivate: [AuthGuard,CateegoryGuard],
+        canActivate: [AuthGuard, CateegoryGuard],
         component: ExamListComponent
       },
       {
         path: 'exams/create',
-        canActivate: [AuthGuard,CateegoryGuard],
+        canActivate: [AuthGuard, CateegoryGuard],
         component: ExamFormComponent
-      },  
+      },
       {
         path: 'questions',
-        canActivate: [AuthGuard,CateegoryGuard],
+        canActivate: [AuthGuard, CateegoryGuard],
         component: QuestionListComponent
-      },     
+      },
+      {
+        path: 'questions/create',
+        canActivate: [AuthGuard, CateegoryGuard],
+        component: QuestionComponent
+      },
     ]
   }
 ];
