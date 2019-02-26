@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { AdminDataService } from './admin-data.service';
-import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'

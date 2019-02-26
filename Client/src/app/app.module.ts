@@ -5,9 +5,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {TableModule,MDBBootstrapModule,IconsModule} from 'angular-bootstrap-md';
+import { TableModule, MDBBootstrapModule, IconsModule } from 'angular-bootstrap-md';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-import {JwtModule} from '@auth0/angular-jwt';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,7 +56,8 @@ import { QuestionListComponent } from './Admin/Companents/question-list/question
     JwtModule
   ],
   providers: [
-    QuestionService, 
+    FormsModule,
+    QuestionService,
     TitleHeaderService,
     {
       provide: HTTP_INTERCEPTORS,

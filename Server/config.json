@@ -3,7 +3,7 @@
     "CertGenerationUrl" : "/certifcates",
     "EmailValidationUrl":"/validate",
     "RestPasswordUrl":"/resetpassword",
-    "SqlConfig" : {
+	"SqlConfig" : {
         "user": "ExamSql",
         "password": "12345678",
         "server": "exam-db.ceuwciuggcni.eu-central-1.rds.amazonaws.com",

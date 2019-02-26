@@ -5,6 +5,7 @@ import { Category } from '../../Models/category';
 import { ExamListEntery } from '../../Models/examListEntery'
 import { ExamsDataService } from '../../Services/exams-data.service';
 import { AdminDataService } from '../../Services/admin-data.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class ExamListComponent implements OnInit, AfterViewInit {
   constructor(private examsData: ExamsDataService,
     private admin: AdminDataService,
     private tableService: MdbTableService,
-    private cdRef: ChangeDetectorRef) {
+    private cdRef: ChangeDetectorRef,
+    private router : Router) {
     this.category = admin.getCategory();
     this.GetExams();
     this.admin.CategoryChanged.subscribe(category => {
@@ -99,7 +101,7 @@ export class ExamListComponent implements OnInit, AfterViewInit {
   }
 
   delete(test: ExamListEntery, index) {
-    this.examsData.DeleteExam(parseInt(test.Id));
+    this.examsData.DeleteExam(parseInt(test.Id)).subscribe(d=>{});
     this.tableService.removeRow(index);
   }
 
@@ -108,6 +110,5 @@ export class ExamListComponent implements OnInit, AfterViewInit {
   }
 
   create() {
-
   }
 }

@@ -36,6 +36,7 @@
       <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >{{el.Exams}}</td>
       <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >
         <div class="ExamButtonDiv buttonTd">
+            <button (click)="ShowQuestion(el,i)" type="button" mdbBtn color="dark" mdbWavesEffect>Show</button>
           <div *ngIf="el.Exams=='0'"><button (click)="update(el,i)" type="button" mdbBtn color="dark" mdbWavesEffect>Update</button></div>
           <div class="activeText" *ngIf="el.Exams!='0'">Active</div>
           <div *ngIf="el.Exams=='0'"><button (click)="delete(el,i)" type="button" mdbBtn color="dark" mdbWavesEffect >Delete</button></div>
@@ -46,7 +47,7 @@
   <tfoot class="grey lighten-5 w-100">
       <tr>
         <td><mdb-icon (click)="create()" far icon="plus-square" class="fa"></mdb-icon></td>
-        <td colspan="4">
+        <td colspan="11">
           <mdb-table-pagination (nextPageClick)="onNextPageClick($event)" (previousPageClick)="onPreviousPageClick($event)">
           </mdb-table-pagination>
         </td>
