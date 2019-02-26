@@ -11,7 +11,7 @@ class AdminExamsManager {
         let answersTable = this.Db.GetAnswersTable();
         question.answers.forEach(element => {
             answersTable.rows.add(element.answer, element.isCorrect);
-            if (element.isCorrect) 
+            if (element.isCorrect)
                 question.CorrectCount++;
         });
         if (question.CorrectCount == 0 || (!question.isMultipleChoice && question.CorrectCount > 1)) {
@@ -20,7 +20,7 @@ class AdminExamsManager {
         question.answers = answersTable;
         question.organizationId = organizationId;
         question.categories = this.Db.CnvertToIdTable(question.categories);
-        let res= await this.Db.ExecuteStoredPorcedure("CreateQuestion", question);
+        let res = await this.Db.ExecuteStoredPorcedure("CreateQuestion", question);
         return res.recordsets[0][0];
     }
 
@@ -48,7 +48,7 @@ class AdminExamsManager {
         let answers = this.Db.GetAnswersUpdateTable();
         data.answers.forEach(element => {
             OjectHelper.addPropertyIfMissing(element, "id", -1);
-            answers.rows.add(element.answer, element.isCorrect, element.id); 
+            answers.rows.add(element.answer, element.isCorrect, element.id);
             if (element.isCorrect)
                 data.correctCount++;
         });
@@ -71,9 +71,8 @@ class AdminExamsManager {
             };
     }
 
-    async DeleteQuestion(organizationId,questionId)
-    {
-        let res = await this.Db.ExecuteStoredPorcedure("DeleteQuestion",{QuestionId:questionId,OrganizationId:organizationId});
+    async DeleteQuestion(organizationId, questionId) {
+        let res = await this.Db.ExecuteStoredPorcedure("DeleteQuestion", { QuestionId: questionId, OrganizationId: organizationId });
         return res.recordsets[0][0];
     }
 

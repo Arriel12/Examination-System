@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AdminDataService } from './admin-data.service';
 import { QuestionListEntery  } from '../Models/QuestionListEntery'
+import { Question } from '../Models/Question';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class QuestionService {
 
   get(questionId) {
     let url = environment.adminApiEndpoint+`/questions/${this.admin.getOrganization().Id}/${this.admin.getCategory().Id}/${questionId}`;
-    return this.http.get(url);
+    return this.http.get<Question>(url);
   }
 
   getList() {

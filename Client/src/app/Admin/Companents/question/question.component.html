@@ -9,19 +9,22 @@
 
     
     <select class="browser-default custom-select" 
-      ngModel name="questionType"  id="questionType" (change)= "selectedTypeId = $event.target.value">
+      [(ngModel)]="SelectedQuestionType" name="questionType"  id="questionType" (change)= "selectedTypeId = $event.target.value; clearAnswersIsCorrect();">
       <option selected disabled value="">Please choose questions type</option>
       <option *ngFor="let item of questionType" [value]="item.id"> {{item.name}} </option>
     </select>
     <br><br><br>
 
     <!-- Question Text -->
-    <input type="text" ngModel name="questionText" #questionText="ngModel" id="questionText" class="form-control mb-4" placeholder="Question Text">
+    <input type="text" [(ngModel)]="question" name="question" id="questionText" class="form-control mb-4" placeholder="Question Text">
+  
+    <!-- Question Tags -->
+    <input type="text" [(ngModel)]="tags" name="tags" id="questionTags" class="form-control mb-4" placeholder="Question Tags">
   
     <!-- text below question Text -->
     <div class="form-group">
        <textarea class="form-control rounded-6" id="textBelowQuestionText"
-       ngModel name="textBelowQuestionText" #textBelowQuestionText="ngModel" rows="3" placeholder="Text below question"></textarea>
+       [(ngModel)]="textBelow" name="textBelowQuestion"  rows="3" placeholder="Text below question"></textarea>
     </div>
   
     <!-- Answers -->
@@ -29,8 +32,7 @@
   
     <div class="form-group">
       <textarea class="form-control rounded-6" id="answer{{i}}" 
-      (change) = "answersId = $event.target.value"
-      ngModel name="{{item.answer}}" #answer{{item}}="ngModel" rows="2" placeholder="Write Answer Number {{i+1}}"
+      [(ngModel)]="item.Answer" [ngModelOptions]="{standalone: true}"  rows="2" placeholder="Write Answer Number {{i+1}}"
       *ngFor="let item of answers; let i = index;" style="margin-bottom:10px"></textarea><br>
     </div>
 
@@ -47,7 +49,7 @@
     <!-- CheckBox to all correct answers-->
     <div *ngSwitchCase="'1'">
     <span>Select all the correct answers: </span> &nbsp;&nbsp;&nbsp;
-<mdb-checkbox ngModel name="{{item.isCorrect}}"
+<mdb-checkbox [(ngModel)]="item.IsCorrect"  [ngModelOptions]="{standalone: true}"
   *ngFor="let item of answers; let i = index;"
    [inline]="true" [default]="true" id="checkbox{{i}}">{{i+1}}</mdb-checkbox>
 </div>
@@ -58,8 +60,9 @@
 
 <div class="custom-control custom-radio custom-control-inline"
     *ngFor="let item of answers; let i = index;">
-  <input ngModel name="radio" type="radio" class="custom-control-input"
-    [value]="item.isCorrect" id="radioInline{{i}}" mdbInput>
+  <input [(ngModel)]="CorrectAnswerRadio" [ngModelOptions]="{standalone: true}"
+   type="radio" class="custom-control-input"
+    [value]="item" id="radioInline{{i}}" mdbInput>
   <label class="custom-control-label" for="radioInline{{i}}">{{i+1}}</label>
 </div>
 </div>
@@ -70,14 +73,14 @@
    
  <span style="text-decoration: underline">Answers layout: </span> &nbsp;&nbsp;&nbsp;
 <div class="custom-control custom-radio custom-control-inline">
-  <input ngModel type="radio" name="isHorizontal" id="vartical" class="custom-control-input"
-  value="'false'" mdbInput>
+  <input [(ngModel)]="isHorizontalValue" type="radio" name="isHorizontal" id="vartical" class="custom-control-input"
+  value="false" mdbInput>
   <label class="custom-control-label" for="vartical">Vertical</label>
 </div>
 
 <div class="custom-control custom-radio custom-control-inline">
-  <input ngModel type="radio" name="isHorizontal" id="horizontal" class="custom-control-input"
-  value="'true'" mdbInput>
+  <input [(ngModel)]="isHorizontalValue" type="radio" name="isHorizontal" id="horizontal" class="custom-control-input"
+  value="true" mdbInput>
   <label class="custom-control-label" for="horizontal">Horizontal</label>
 </div>
 <br><br>
@@ -87,6 +90,8 @@
     <button class="btn btn-info btn-block" type="submit"
     (click)="AddQuestion(f.value)">Save</button>
     <p>{{f.value | json}} </p>
+    <p>{{answers | json}}</p>
+    <p>{{CorrectAnswerRadio |json}}</p>
   </form>
   <!-- End of Question form -->
 
