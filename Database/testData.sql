@@ -31,9 +31,9 @@ VALUES (1,'1',1),(1,'2',0),(1,'one',0),
 	(4,'1',1),(4,'2',1),(4,'one',1),(4,'false',1);
 
 INSERT INTO Exams (FailMailBody,FailMailSubject,FailText,[Language],[Name],OpeningText,OrganaizerEmail,
-OrganizationId,PassingGrade,ShowAnswer,SuccessMailBody,SuccessMailSubject,SuccessText)
+OrganizationId,PassingGrade,ShowAnswer,SuccessMailBody,SuccessMailSubject,SuccessText,CategoryId)
 VALUES (N'גוף נכשל',N'fail subject',N'נכשלת- you have failed','english',N'testy testy',
-N'this is a מבחן',N'mail@gmail.com',1,90,1,N'גוף passing',N'כותרת passing',N'עברת-u passed');
+N'this is a מבחן',N'mail@gmail.com',1,90,1,N'גוף passing',N'כותרת passing',N'עברת-u passed',1);
 
 DECLARE @examId int;
 SET @examId = SCOPE_IDENTITY();
