@@ -54,6 +54,7 @@ import { UserLayoutComponent } from './User/user-layout/user-layout.component';
     ReactiveFormsModule
   ],
   providers: [
+    FormsModule,
     LoginService,
     RegisterService,
     QuestionService, 

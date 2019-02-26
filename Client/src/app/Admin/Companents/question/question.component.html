@@ -1,94 +1,94 @@
 <div style="color:white;">
 
-<!-- Default form contact -->
-<form class="text-center border border-light p-5">
+<!-- Question form -->
+<form class="text-center border border-light p-5" #f="ngForm">
 
     <p class="h4 mb-4">Create/ Edit Question</p>
   
     <p class="text-left"> Field: <b> {{questionCategory[0].name}}  </b> </p>
 
-    <div class="btn-group" mdbDropdown style="text-align: left; float: left;">
-         <button mdbDropdownToggle type="button" mdbBtn color="indigo" class="dropdown-toggle waves-light"
-        for="questionType" id="questionType" mdbWavesEffect>
-        Question Type:
-        </button> 
-
-        <div class="dropdown-menu dropdown-primary" id="questionType">
-            <a class="dropdown-item" *ngFor="let item of questionType">{{item.name}} </a>  
-        </div>
-    </div><br><br><br>
+    
+    <select class="browser-default custom-select" 
+      ngModel name="questionType"  id="questionType" (change)= "selectedTypeId = $event.target.value">
+      <option selected disabled value="">Please choose questions type</option>
+      <option *ngFor="let item of questionType" [value]="item.id"> {{item.name}} </option>
+    </select>
+    <br><br><br>
 
     <!-- Question Text -->
-    <input type="text" id="questionText" class="form-control mb-4" placeholder="Question Text">
+    <input type="text" ngModel name="questionText" #questionText="ngModel" id="questionText" class="form-control mb-4" placeholder="Question Text">
   
     <!-- text below question Text -->
     <div class="form-group">
-       <textarea class="form-control rounded-6" id="textBelowQuestionText" rows="3" placeholder="Text below question"></textarea>
+       <textarea class="form-control rounded-6" id="textBelowQuestionText"
+       ngModel name="textBelowQuestionText" #textBelowQuestionText="ngModel" rows="3" placeholder="Text below question"></textarea>
     </div>
   
     <!-- Answers -->
     <label>Answers</label>
-    <!-- <select class="browser-default custom-select mb-4 multiple">
-      <option value="" selected disabled>Choose option</option>
-      <option value="1">Feedback</option>
-      <option value="2">Report a bug</option>
-      <option value="3">Feature request</option>
-      <option value="4">Feature request</option>
-    </select> -->
   
-    <!-- Message -->
     <div class="form-group">
-      <textarea class="form-control rounded-6" id="answerQuestion" rows="2" placeholder="Write Answer"></textarea><br>
-      <textarea class="form-control rounded-6" id="answerQuestion" rows="2" placeholder="Write Answer"></textarea><br>
-      <textarea class="form-control rounded-6" id="answerQuestion" rows="2" placeholder="Write Answer"></textarea><br>
-      <textarea class="form-control rounded-6" id="answerQuestion" rows="2" placeholder="Write Answer"></textarea><br>
+      <textarea class="form-control rounded-6" id="answer{{i}}" 
+      (change) = "answersId = $event.target.value"
+      ngModel name="{{item.answer}}" #answer{{item}}="ngModel" rows="2" placeholder="Write Answer Number {{i+1}}"
+      *ngFor="let item of answers; let i = index;" style="margin-bottom:10px"></textarea><br>
     </div>
 
     <!-- button to Add Answer -->
-    <button class="waves-light btn btn-amber" color="amber" mdbbtn mdbwaveseffect type="button">
-      Add Answer</button><br><br>
-  
-    <!-- Copy -->
-    <!-- <div class="row">
-      <div class="col-md-6 mx-auto d-flex justify-content-center">
-        <div class="custom-control custom-checkbox mb-4">
-          <input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
-          <label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>
-        </div>
-      </div>
-    </div> -->
+    <button class="waves-light btn btn-amber" color="amber" mdbbtn mdbwaveseffect
+     (click)="addAnswer()" type="button"> Add Answer</button>
+     
+     <!-- button to Delete Answer -->
+     <button class="waves-light btn btn-red" color="red" mdbbtn mdbwaveseffect
+     (click)="deleteAnswer(answersId)" type="button"> Delete Answer</button><br><br>
 
-    <!-- CheckBox to right answers-->
-    <span>Check the correct answers: </span> &nbsp;&nbsp;&nbsp;
-<mdb-checkbox [inline]="true" [default]="true">1</mdb-checkbox>
+<!-- switch case if CheckBox / radio button-->
+<div [ngSwitch]="selectedTypeId">
+    <!-- CheckBox to all correct answers-->
+    <div *ngSwitchCase="'1'">
+    <span>Select all the correct answers: </span> &nbsp;&nbsp;&nbsp;
+<mdb-checkbox ngModel name="{{item.isCorrect}}"
+  *ngFor="let item of answers; let i = index;"
+   [inline]="true" [default]="true" id="checkbox{{i}}">{{i+1}}</mdb-checkbox>
+</div>
 
-<mdb-checkbox [inline]="true" [default]="true">2</mdb-checkbox>
+    <!-- Radio Button to right answer-->
+    <div *ngSwitchCase="'0'">
+    <span>Select the correct answer: </span> &nbsp;&nbsp;&nbsp;
 
-<mdb-checkbox [inline]="true" [default]="true">3</mdb-checkbox>
-
-<mdb-checkbox [inline]="true" [default]="true">4</mdb-checkbox>
+<div class="custom-control custom-radio custom-control-inline"
+    *ngFor="let item of answers; let i = index;">
+  <input ngModel name="radio" type="radio" class="custom-control-input"
+    [value]="item.isCorrect" id="radioInline{{i}}" mdbInput>
+  <label class="custom-control-label" for="radioInline{{i}}">{{i+1}}</label>
+</div>
+</div>
 <br><br>
+</div>
 
     <!-- Horizontal or Vertical radio button-->
    
  <span style="text-decoration: underline">Answers layout: </span> &nbsp;&nbsp;&nbsp;
 <div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" class="custom-control-input" id="vertical" name="radio" mdbInput checked>
-  <label class="custom-control-label" for="vertical">Vertical</label>
+  <input ngModel type="radio" name="isHorizontal" id="vartical" class="custom-control-input"
+  value="'false'" mdbInput>
+  <label class="custom-control-label" for="vartical">Vertical</label>
 </div>
 
 <div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" class="custom-control-input" id="horizontal" name="radio" mdbInput>
+  <input ngModel type="radio" name="isHorizontal" id="horizontal" class="custom-control-input"
+  value="'true'" mdbInput>
   <label class="custom-control-label" for="horizontal">Horizontal</label>
 </div>
 <br><br>
   
   
     <!-- Send button -->
-    <button class="btn btn-info btn-block" type="submit">Save</button>
-  
+    <button class="btn btn-info btn-block" type="submit"
+    (click)="AddQuestion(f.value)">Save</button>
+    <p>{{f.value | json}} </p>
   </form>
-  <!-- Default form contact -->
+  <!-- End of Question form -->
 
 
 </div>
