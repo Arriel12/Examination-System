@@ -24,7 +24,9 @@ import { AdminLayoutComponent } from './Admin/Companents/admin-layout/admin-layo
 import { TitleHeaderComponent } from './title-header/title-header.component';
 import { UserLayoutComponent } from './User/user-layout/user-layout.component';
 import { TokenInterceptor } from './Admin/Services/AuthInterceptor';
-import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component'
+import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
+import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.component';
+import { ExamRegistrationComponent } from './User/Compannets/exam-registration/exam-registration.component'
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { QuestionListComponent } from './Admin/Companents/question-list/question
     TitleHeaderComponent,
     UserLayoutComponent,
     QuestionListComponent,
+    ExamIntroComponent,
+    ExamRegistrationComponent,
   ],
   imports: [
     BrowserModule,

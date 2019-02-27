@@ -10,6 +10,8 @@ import { LoginComponent } from './Admin/Companents/login/login.component';
 import { AuthGuardService as AuthGuard } from './Admin/Services/auth-guard.service'
 import { CategoryGuardService as CateegoryGuard } from './Admin/Services/category-guard.service'
 import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
+import { ExamRegistrationComponent } from './User/Compannets/exam-registration/exam-registration.component';
+import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.component';
 
 
 const routes: Routes = [
@@ -17,10 +19,29 @@ const routes: Routes = [
   //    path: '',
   //    component: AppComponent
   //  },
+  // {
+  //   path: 'user',
+  //   component: AppComponent,
+  //   children:[
+  //     {
+  //       path: ':examId',
+  //       component: ExamRegistrationComponent
+  //     },
+  //     {
+  //       path: ':examId/intro',
+  //       component: ExamIntroComponent
+  //     },
+  //   ]
+  // },
   {
-    path: 'user',
-    component: UserLayoutComponent
+    path: 'user/:examId/intro',
+    component: ExamIntroComponent
   },
+  {
+    path: 'user/:examId',
+    component: ExamRegistrationComponent
+  },
+  
   {
     path: 'admin/login',
     component: LoginComponent
