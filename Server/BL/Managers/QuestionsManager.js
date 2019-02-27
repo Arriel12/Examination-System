@@ -10,8 +10,8 @@ class AdminExamsManager {
         question.CorrectCount = 0;
         let answersTable = this.Db.GetAnswersTable();
         question.answers.forEach(element => {
-            answersTable.rows.add(element.answer, element.isCorrect);
-            if (element.isCorrect)
+            answersTable.rows.add(element.Answer, element.IsCorrect);
+            if (element.IsCorrect)
                 question.CorrectCount++;
         });
         if (question.CorrectCount == 0 || (!question.isMultipleChoice && question.CorrectCount > 1)) {
@@ -47,9 +47,9 @@ class AdminExamsManager {
         this._fillQuestionUpdateData(data, organizationId, categoryId, questionId);
         let answers = this.Db.GetAnswersUpdateTable();
         data.answers.forEach(element => {
-            OjectHelper.addPropertyIfMissing(element, "id", -1);
-            answers.rows.add(element.answer, element.isCorrect, element.id);
-            if (element.isCorrect)
+            OjectHelper.addPropertyIfMissing(element, "Id", -1);
+            answers.rows.add(element.Answer, element.IsCorrect, element.Id);
+            if (element.IsCorrect)
                 data.correctCount++;
         });
         data.answers = answers;

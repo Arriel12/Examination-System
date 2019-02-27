@@ -20,7 +20,7 @@
     "JWT":{
         "key":"dhetefjktgafcjuhloryjgf,owectumriEOCVM,Y",
         "algoritem":"HS256",
-        "ttl" : 60,
+        "ttl" : 600,
         "aud" : "ExamAdmin",
         "iss" : "ExamAdmin"
     },

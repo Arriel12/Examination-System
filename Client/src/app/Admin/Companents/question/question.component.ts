@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../Services/question.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-question',
@@ -19,11 +19,11 @@ export class QuestionComponent implements OnInit {
   SelectedQuestionType: number;
   isHorizontalValue: string;
 
-  constructor(private questionsData: QuestionService, private CurRoute: ActivatedRoute) {
+  constructor(private questionsData: QuestionService, private CurRoute: ActivatedRoute,
+    private router: Router) {
     this.questionId = this.CurRoute.snapshot.paramMap.get('id');
     if (this.questionId) {
       this.questionsData.get(this.questionId).subscribe(d => {
-        debugger;
         this.isHorizontal = d.IsHorizontal;
         this.isHorizontalValue = d.IsHorizontal ? "true" : "false";
         this.answers = d.answers;
@@ -40,9 +40,7 @@ export class QuestionComponent implements OnInit {
             }
           }
         }
-      }, err => {
-        //cant get question
-      })
+      }, err => this.FailHandler(err))
     }
   }
 
@@ -70,40 +68,56 @@ export class QuestionComponent implements OnInit {
 
 
   addAnswer() {
-    debugger;
     if (this.answersId < 10) {
       this.answersId++;
-      this.answers.push({ answer: "", isCorrect: false });
+      this.answers.push({ Answer: "", IsCorrect: false });
     }
   }
 
   deleteAnswer(answersId) {
-    debugger;
     if (this.answersId > 2) {
       this.answersId--;
       this.answers.splice(this.answersId, 1);
     }
   }
 
-  clearAnswersIsCorrect() {
+  clearAnswersIsCorrect(skipRadio:boolean = false) {
     this.answers.forEach(answer => {
-      answer.isCorrect = false;
+      answer.IsCorrect = false;
     });
-    this.CorrectAnswerRadio = null;
+    if(!skipRadio)
+      this.CorrectAnswerRadio = null;
   }
 
   AddQuestion(f) {
-    debugger;
     f.isMultipleChoice = f.questionType == "1";
     delete f.questionType;
     f.answers = this.answers;
-    if (this.CorrectAnswerRadio != null)
-      this.CorrectAnswerRadio.isCorrect = true;
-    this.questionsData.create(f).subscribe(data => {
-      //seccuss
-    }, err => {
-      //fail
-    });
+    if (this.CorrectAnswerRadio != null) {
+      this.clearAnswersIsCorrect(true);
+      this.CorrectAnswerRadio.IsCorrect = true;
+    }
+    if (this.questionId) {
+      //update
+      this.questionsData.update(this.questionId,f).subscribe(
+        ()=>this.SuccessHandler(),err=>this.FailHandler(err));
+    }
+    else {
+      //create
+      this.questionsData.create(f).subscribe(
+        ()=>this.SuccessHandler(), err=>this.FailHandler(err));
+    }
   }
 
+  private SuccessHandler()
+  {
+    this.router.navigate(["/admin/questions"]);
+  }
+
+  private FailHandler(error)
+  {
+    alert(error);
+  }
+
+  
 }
