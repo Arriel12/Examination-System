@@ -41,6 +41,11 @@ const routes: Routes = [
         component: ExamFormComponent
       },
       {
+        path: 'exams/update/:id',
+        canActivate: [AuthGuard, CateegoryGuard],
+        component: ExamFormComponent
+      },
+      {
         path: 'questions',
         canActivate: [AuthGuard, CateegoryGuard],
         component: QuestionListComponent
@@ -50,6 +55,11 @@ const routes: Routes = [
         canActivate: [AuthGuard, CateegoryGuard],
         component: QuestionComponent
       },
+      {
+        path: 'questions/update/:id',
+        canActivate: [AuthGuard, CateegoryGuard],
+        component: QuestionComponent
+      }
     ]
   }
 ];

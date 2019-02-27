@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { from } from 'rxjs';
 import { TableModule, MDBBootstrapModule, IconsModule } from 'angular-bootstrap-md';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -13,7 +14,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ExamListComponent } from './Admin/Companents/exam-list/exam-list.component';
 import { CopyClipboardDirective } from './Admin/Directives/copy-clipboard.directive';
-import { from } from 'rxjs';
 import { ExamFormComponent } from './Admin/Companents/exam-form/exam-form.component';
 import { LoginComponent } from './Admin/Companents/login/login.component';
 import { RegisterComponent } from './Admin/Companents/register/register.component';
@@ -56,7 +56,6 @@ import { QuestionListComponent } from './Admin/Companents/question-list/question
     JwtModule
   ],
   providers: [
-    FormsModule,
     QuestionService,
     TitleHeaderService,
     {

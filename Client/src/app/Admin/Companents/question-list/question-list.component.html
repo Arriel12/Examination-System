@@ -24,14 +24,14 @@
       <th *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" scope="row">{{el.Id}}</th>
       <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >
         <div>
-          {{el.Question}}
+          <strong>{{el.Question}}</strong><br/>
           {{el.Tags}}
         </div>
       </td>
       <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >{{el.UpdatedOn | date:'HH:mm dd/MM/yyyy'}}</td>
       <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >
-        <span  *ngIf="!el.IsMultipleChoice">Single choice  </span>
-        <span  *ngIf="el.IsMultipleChoice">Muliple choice  </span>
+        <span  *ngIf="el.IsMultipleChoice=='false'">Single choice  </span>
+        <span  *ngIf="el.IsMultipleChoice=='true'">Multiple choice  </span>
       </td>
       <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >{{el.Exams}}</td>
       <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" >
