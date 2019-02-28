@@ -36,7 +36,10 @@ router.post('/:studentExamId/answer', validate(Volidators.answer),
 router.post('/:studentExamId/submit', asyncWrapper(async function (req, res) {
     let studentExamId = req.params.studentExamId;
     let result =await manager.SubmitTest(studentExamId);
-    res.status(200).send(result);
+    if(result.error)
+        res.status(400).send(result);
+    else
+        res.status(200).send(result);
 }));
 
 module.exports = router;

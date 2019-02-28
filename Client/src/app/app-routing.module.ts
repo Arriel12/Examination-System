@@ -12,6 +12,7 @@ import { CategoryGuardService as CateegoryGuard } from './Admin/Services/categor
 import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
 import { ExamRegistrationComponent } from './User/Compannets/exam-registration/exam-registration.component';
 import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.component';
+import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summery.component';
 
 
 const routes: Routes = [
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: 'user/:examId',
     component: ExamRegistrationComponent
+  },
+  {
+    path: 'user/:examId/summery',
+    component: ExamSummeryComponent
   },
   
   {

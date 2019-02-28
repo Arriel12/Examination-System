@@ -26,7 +26,8 @@ import { UserLayoutComponent } from './User/user-layout/user-layout.component';
 import { TokenInterceptor } from './Admin/Services/AuthInterceptor';
 import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
 import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.component';
-import { ExamRegistrationComponent } from './User/Compannets/exam-registration/exam-registration.component'
+import { ExamRegistrationComponent } from './User/Compannets/exam-registration/exam-registration.component';
+import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summery.component'
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ExamRegistrationComponent } from './User/Compannets/exam-registration/e
     QuestionListComponent,
     ExamIntroComponent,
     ExamRegistrationComponent,
+    ExamSummeryComponent,
   ],
   imports: [
     BrowserModule,

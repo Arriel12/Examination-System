@@ -1,0 +1,20 @@
+.redColor{
+    color:red;
+}
+
+.greenColor{
+    color: green;
+}
+
+h2,div{
+    color: white;
+}
+
+.conteiner{
+    text-align: center;
+}
+
+button{
+    width:30%;
+    display: inline;
+}
