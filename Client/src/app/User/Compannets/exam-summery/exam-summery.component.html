@@ -4,7 +4,8 @@
   <div>{{summery.text}}</div>
   <hr />
   <div>
-    Your grade: <span ng-class='{redColor : summery.passed!=1, greenColor: summery.passed==1}'>{{summery.grade}}</span>
+    Your grade: <span 
+    [ngClass]='{"redColor" : summery.passed!=1, "greenColor": summery.passed==1}'>{{summery.grade}}</span>
   </div>
   <div>
     status:

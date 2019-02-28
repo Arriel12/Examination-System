@@ -21,6 +21,7 @@ export class ExamRegistrationComponent implements OnInit {
 
     this.examService.StartExam(examId, f, (err) => {
       if (err == '') {
+        examId = this.examService.getExam().id;
         let url = `/user/${examId}/intro`;
         this.router.navigate([url]);
       }

@@ -6,5 +6,6 @@ export class StudentQuestion {
     isMultipleChoice: boolean;
     question: string;
     textBelow: string;
-    answers: StudentAnswer[]
+    answers: StudentAnswer[];
+    isAnswered: boolean;
 }

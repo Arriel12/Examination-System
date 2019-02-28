@@ -14,7 +14,7 @@ export class ExamSummeryComponent implements OnInit {
 
   constructor(private examService: StudentExamService) {
     //for debug
-    //   this.examService.SubmitExam(e=>{
+    // this.examService.SubmitExam(e=>{
     //   this.summery = this.examService.examSummery;
     //   this.summery.showAnswers=true;});
     this.summery = this.examService.examSummery;

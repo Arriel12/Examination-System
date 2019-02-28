@@ -13,7 +13,7 @@ import { QuestionListComponent } from './Admin/Companents/question-list/question
 import { ExamRegistrationComponent } from './User/Compannets/exam-registration/exam-registration.component';
 import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.component';
 import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summery.component';
-
+import { UserTestComponent } from './User/Compannets/user-test/user-test.component';
 
 const routes: Routes = [
   //  {
@@ -39,14 +39,17 @@ const routes: Routes = [
     component: ExamIntroComponent
   },
   {
-    path: 'user/:examId',
-    component: ExamRegistrationComponent
+    path: 'user/:examId/start',
+    component: UserTestComponent
   },
   {
     path: 'user/:examId/summery',
     component: ExamSummeryComponent
   },
-  
+  {
+    path: 'user/:examId',
+    component: ExamRegistrationComponent
+  },
   {
     path: 'admin/login',
     component: LoginComponent

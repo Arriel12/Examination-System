@@ -1,4 +1,4 @@
-import { StudentQuestion } from './StudentQuestion';
+import { StudentQuestion } from '../../Common/Models/StudentQuestion';
 
 export class StudentExam
 {

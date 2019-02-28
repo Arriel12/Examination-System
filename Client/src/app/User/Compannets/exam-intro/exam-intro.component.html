@@ -4,5 +4,5 @@
   <p>{{exam.openingText}}</p>
   <br>
   <p>passing grade: {{exam.passingGrade}}</p>
-  <button class="btn btn-info btn-block" routerLink="/">start test</button>
+  <button class="btn btn-info btn-block" routerLink="/user/{{examService.getExam().id}}}/start">start test</button>
 </div>
