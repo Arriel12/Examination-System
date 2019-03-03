@@ -32,6 +32,7 @@ import { UserTestComponent } from './User/Compannets/user-test/user-test.compone
 import { QuestionComponent as studentQuestionCompannet} from './Common/Components/question/question.component';
 import { AnwseredQuestionComponent } from './User/Compannets/anwsered-question/anwsered-question.component';
 import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-test.component';
+import { ForgotPasswordComponent } from './Admin/Companents/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-
     UserTestComponent,
     studentQuestionCompannet,
     AnwseredQuestionComponent,
-    AnwseredTestComponent
+    AnwseredTestComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
