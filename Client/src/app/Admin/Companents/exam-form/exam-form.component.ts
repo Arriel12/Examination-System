@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../../Models/category';
 import { AdminDataService } from '../../Services/admin-data.service';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Email } from '../../Models/Email';
 
 @Component({
   selector: 'app-exam-form',
@@ -19,6 +20,9 @@ export class ExamFormComponent implements OnInit {
   massageToFailure:string;
   currentStatus: string;
   emailFrom: string;
+
+  passingEmail: Email = new Email();
+  failureEmail: Email = new Email();
 
   stam:string;
 

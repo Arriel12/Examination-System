@@ -25,6 +25,8 @@ import { TitleHeaderComponent } from './title-header/title-header.component';
 import { UserLayoutComponent } from './User/user-layout/user-layout.component';
 import { TokenInterceptor } from './Admin/Services/AuthInterceptor';
 import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
+import { EmailTitleAndBodyComponent } from './Admin/Companents/email-title-and-body/email-title-and-body.component';
+import { EmailTitleAndBodyService } from './Admin/Services/email-title-and-body.service';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import { QuestionListComponent } from './Admin/Companents/question-list/question
     TitleHeaderComponent,
     UserLayoutComponent,
     QuestionListComponent,
+    EmailTitleAndBodyComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ import { QuestionListComponent } from './Admin/Companents/question-list/question
     FormsModule,
     QuestionService,
     TitleHeaderService,
+    EmailTitleAndBodyService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
