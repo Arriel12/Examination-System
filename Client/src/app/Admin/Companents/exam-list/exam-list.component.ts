@@ -110,5 +110,6 @@ export class ExamListComponent implements OnInit, AfterViewInit {
   }
 
   create() {
+    this.router.navigate(['/admin/exams/create']);
   }
 }

@@ -1,17 +1,110 @@
-<div class="md-form">
-  <div class="header">General test details</div>
-  <div>
-    <div class="row">Field of study: <span>{{category.name}}</span></div>
-    <div class="row">
-      <span>Language: </span>
-      <select class="browser-default" #languageSelect>
-        <option selected value="english">English</option>
-        <option value="hebrew">Hebrew</option>
-      </select>
+<div style="color:white;">
+
+  <!-- Question form -->
+  <form class="text-center border border-light p-5" #f="ngForm">
+
+    <p class="h2 mb-2"> New Test </p>
+    <p class="h4 mb-4">General Test Details </p>
+
+    <!-- Field of study -->
+    <p class="text-left"> Field of study:
+      <b> develop </b> </p>
+
+    <!-- Test Language -->
+    <p class="text-left"> Language: </p>
+    <select class="browser-default custom-select" ngModel name="languages" id="languages" required>
+      <option selected disabled value="">Please choose language</option>
+      <option *ngFor="let item of languages" [value]="item.name"> {{item.name}} </option>
+    </select>
+    <br><br>
+
+
+    <!-- Test Name -->
+
+    <input type="text" ngModel name="testName" #testName="ngModel" id="testName" class="form-control mb-4"
+      placeholder="Test Name" required>
+
+    <!-- Error or Success Messages -->
+    <div class="form-group">
+      <div [formGroup]="validationForm" #f2="ngForm">
+        <div class="md-form">
+          <input mdbInput mdbValidate formControlName="numberFormEx" min="0" max="100" type="number" ngModel
+            name="numberFormEx" class="form-control" id="numberFormEx">
+          <label for="numberFormEx">Type your Passing Grade</label>
+          <mdb-error *ngIf="numberFormEx.invalid && (numberFormEx.dirty || numberFormEx.touched)">Grade invalid
+          </mdb-error>
+          <mdb-success *ngIf="numberFormEx.valid && (numberFormEx.dirty || numberFormEx.touched)">Grade valid
+          </mdb-success>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <span>test name</span>
-      <input mdbInput type="text" #testNameInput class="form-control">
+
+    <!-- inline Checkbok to show correct answers after submission-->
+    <div class="form-group text-left">
+      <!-- <textarea class="form-control rounded-6" id="textBelowQuestionText"
+              ngModel name="textBelowQuestionText" #textBelowQuestionText="ngModel" rows="3" placeholder="Text below question"></textarea> -->
+      <mdb-checkbox [inline]="true" [default]="true" ngModel name="showCorrect">Show correct answers after submission
+      </mdb-checkbox>
     </div>
-  </div>
+
+
+
+
+    <!-- Header -->
+    <div class="form-group">
+      <label for="Header">Test Header</label>
+      <textarea class="form-control rounded-6" id="Header" ngModel name="Header" #Header="ngModel" rows="3"
+        placeholder="Header Test"></textarea>
+    </div>
+
+    <!-- Massage To Show on Success -->
+    <div class="form-group">
+      <label for="massageToSuccess">Massage To Show on Success</label>
+      <textarea class="form-control rounded-6" id="massageToSuccess" ngModel name="massageToSuccess"
+        #massageToSuccess="ngModel" rows="3" placeholder="Massage To Show on Success" required></textarea>
+    </div>
+
+    <!-- Massage To Show on Failure -->
+    <div class="form-group">
+      <label for="massageToFailure">Massage To Show on Failure</label>
+      <textarea class="form-control rounded-6" id="massageToFailure" ngModel name="massageToFailure"
+        #massageToFailure="ngModel" rows="3" placeholder="Massage To Show on Failure" required></textarea>
+    </div>
+
+    <!-- Certificate -->
+    <p class="text-left"> Certificate Template: </p>
+    <select class="browser-default custom-select" ngModel name="certificates" id="certificates" required>
+      <option selected disabled value="">Please choose Certificate template</option>
+      <option *ngFor="let item of certificates" [value]="item.name"> {{item.name}} </option>
+    </select>
+    <br><br>
+
+    <h3> Email delivery upon test compilation </h3>
+    <!-- Field of study -->
+    <p class="text-left" [(ngModel)]="stam" ngModel name="currentStatus"> Current Status:
+      <ng-container *ngIf="validateEmail(emailFrom.value) ; else elseTemplate">
+        <b  style="color:green"> ON  </b>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <b  style="color:red"> OFF </b>
+      </ng-template>
+    </p>
+    <br>
+
+
+    <!-- Email From  -->
+    <input type="text" ngModel name="emailFrom" #emailFrom="ngModel" id="emailFrom" class="form-control mb-4"
+      placeholder="Email From" required [value]="">
+
+
+
+    <!-- Send button -->
+    <button class="btn btn-info btn-block" type="submit" (click)="AddExam(f.value, f2.value)"
+      [disabled]="!f.valid || !f2.valid">Save</button>
+    <p>{{f.value | json}} </p>
+    <p>{{f2.value | json}} </p>
+  </form>
+  <!-- End of Test form -->
+
+
 </div>

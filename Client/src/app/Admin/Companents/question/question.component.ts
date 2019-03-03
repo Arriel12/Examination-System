@@ -51,8 +51,7 @@ ngOnInit() {
  }
 
  AddQuestion(f){
-   console.log(f);
-
+   return f.value;
  }
 
 }

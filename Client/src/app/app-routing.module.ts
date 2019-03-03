@@ -13,10 +13,10 @@ import { QuestionListComponent } from './Admin/Companents/question-list/question
 
 
 const routes: Routes = [
-  //  {
-  //    path: '',
-  //    component: AppComponent
-  //  },
+    {
+      path: '',
+      component: ExamFormComponent
+    },
   {
     path: 'user',
     component: UserLayoutComponent
