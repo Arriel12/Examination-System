@@ -24,7 +24,12 @@ import { AdminLayoutComponent } from './Admin/Companents/admin-layout/admin-layo
 import { TitleHeaderComponent } from './title-header/title-header.component';
 import { UserLayoutComponent } from './User/user-layout/user-layout.component';
 import { TokenInterceptor } from './Admin/Services/AuthInterceptor';
-import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component'
+import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
+import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.component';
+import { ExamRegistrationComponent } from './User/Compannets/exam-registration/exam-registration.component';
+import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summery.component';
+import { UserTestComponent } from './User/Compannets/user-test/user-test.component';
+import { QuestionComponent as studentQuestionCompannet} from './Common/Components/question/question.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +45,11 @@ import { QuestionListComponent } from './Admin/Companents/question-list/question
     TitleHeaderComponent,
     UserLayoutComponent,
     QuestionListComponent,
+    ExamIntroComponent,
+    ExamRegistrationComponent,
+    ExamSummeryComponent,
+    UserTestComponent,
+    studentQuestionCompannet
   ],
   imports: [
     BrowserModule,

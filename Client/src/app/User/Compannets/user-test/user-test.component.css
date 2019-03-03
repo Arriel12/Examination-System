@@ -1,0 +1,32 @@
+.answered{
+    color: green;
+}
+
+.notAnswered{
+    color: red;
+}
+
+div{
+color: white;
+}
+
+.AnswersNav{
+    display: inline-flex;
+    /*justify-content: space-around;*/
+}
+
+.conteiner{
+    /* display: flex;
+    flex-direction: column;
+    align-content: center; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.buttons-conteiner{
+    display: flex;
+    flex-direction: row;
+}

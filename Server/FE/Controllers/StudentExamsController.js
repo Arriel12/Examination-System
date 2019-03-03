@@ -25,18 +25,21 @@ router.post('/:studentExamId/answer', validate(Volidators.answer),
         let result =await manager.AnswerQuestion(studentExamId, questionId, answers);
         if(result!=null &&result.recordsets[0]!=null &&  result.recordsets[0][0].Error!=undefined)
         {
-            res.status(400).send(result.recordsets[0][0].Error);
+            res.status(400).send({err:result.recordsets[0][0].Error});
         }
         else
         {
-            res.sendStatus(200);
+            res.status(200).send({});
         }
     }));
 
 router.post('/:studentExamId/submit', asyncWrapper(async function (req, res) {
     let studentExamId = req.params.studentExamId;
     let result =await manager.SubmitTest(studentExamId);
-    res.status(200).send(result);
+    if(result.error)
+        res.status(400).send(result);
+    else
+        res.status(200).send(result);
 }));
 
 module.exports = router;

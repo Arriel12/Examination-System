@@ -47,6 +47,12 @@ class StudentsExamManager {
         }
         let results = await this.Db.ExecuteStoredPorcedure('GetGrade',SubmitParms);
         results = results.recordsets[0][0];
+        if(results.Error)
+        {
+            return {
+                error: results.Error
+            };
+        }
         //genrate cert url
         let certUrl = null;
         if(results.CertificateUrl)
@@ -66,7 +72,7 @@ class StudentsExamManager {
         let ResultsDto =
         {
             grade: results.Grade,
-            text: results.text,
+            text: results.Text,
             passed: results.Passed,
             showAnswers: results.ShowAnswer,
             passingGrade: results.PassingGrade,

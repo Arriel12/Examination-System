@@ -1,0 +1,20 @@
+<div class="continer">
+  <div>{{question.question}}</div>
+  <div>{{question.textBelow}}</div>
+  <div class="answers">
+    <div class="answer" *ngFor="let item of question.answers;let i=index;">
+      <!-- single choice -->
+      <div *ngIf="!question.isMultipleChoice">
+        <input type="radio" name="answers" class="custom-control-input" [value]="item" id="radioAnswer{{i}}" mdbInput
+          (change)="SelectAnswer(i)" [checked]="item.selected" />
+        <label class="custom-control-label" for="radioAnswer{{i}}">{{item.answer}}</label>
+      </div>
+      <!-- multiple choice -->
+      <div *ngIf="question.isMultipleChoice">
+        <mdb-checkbox [(ngModel)]="item.selected" [ngModelOptions]="{standalone: true}" [inline]="true"
+          id="checkbox{{i}}">{{item.answer}}
+        </mdb-checkbox>
+      </div>
+    </div>
+  </div>
+</div>

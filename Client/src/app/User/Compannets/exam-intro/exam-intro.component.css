@@ -1,0 +1,14 @@
+div,p,h2 {
+    word-wrap: break-word;
+    color: white;
+  }
+
+.conteiner{
+  text-align: center;
+  margin: 20px;
+}
+
+button{
+  width: 30%;
+  display: inline;
+}
