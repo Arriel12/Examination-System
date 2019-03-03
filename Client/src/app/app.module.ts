@@ -30,6 +30,8 @@ import { ExamRegistrationComponent } from './User/Compannets/exam-registration/e
 import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summery.component';
 import { UserTestComponent } from './User/Compannets/user-test/user-test.component';
 import { QuestionComponent as studentQuestionCompannet} from './Common/Components/question/question.component';
+import { AnwseredQuestionComponent } from './User/Compannets/anwsered-question/anwsered-question.component';
+import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-test.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { QuestionComponent as studentQuestionCompannet} from './Common/Component
     ExamRegistrationComponent,
     ExamSummeryComponent,
     UserTestComponent,
-    studentQuestionCompannet
+    studentQuestionCompannet,
+    AnwseredQuestionComponent,
+    AnwseredTestComponent
   ],
   imports: [
     BrowserModule,

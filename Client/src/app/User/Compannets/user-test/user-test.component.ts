@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class UserTestComponent implements OnInit {
 
-  private questions:StudentQuestion[];
-  private questionIndex = 0;
+  questions:StudentQuestion[];
+  questionIndex = 0;
 
   constructor(private examService: StudentExamService,private router:Router) {
     this.questions = examService.getExam().questions;

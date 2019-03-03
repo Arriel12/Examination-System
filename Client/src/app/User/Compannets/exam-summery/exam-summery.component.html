@@ -16,5 +16,5 @@
     passing grade: {{summery.passingGrade}}
   </div>
   <br/>
-  <button class="btn btn-info btn-block" *ngIf="summery.showAnswers">Show Answers</button>
+  <button class="btn btn-info btn-block" *ngIf="summery.showAnswers" routerLink="/user/{{summery.id}}/answers">Show Answers</button>
 </div>

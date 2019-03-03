@@ -5,4 +5,5 @@ export class ExamSummery{
         passingGrade: number;
         certificate: string;
         text:string;
+        id:string;
 }
