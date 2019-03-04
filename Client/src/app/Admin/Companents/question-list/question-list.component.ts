@@ -103,8 +103,8 @@ export class QuestionListComponent implements OnInit, AfterViewInit {
     this.tableService.removeRow(index);
   }
 
-  update(test: QuestionListEntery, index) {
-
+  update(question: QuestionListEntery, index) {
+    this.router.navigate(['/admin/questions/update/'+ question.Id]);
   }
 
   create() {

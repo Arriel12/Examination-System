@@ -10,7 +10,7 @@ class StudentsExamManager {
     async StartNewExam(encodedExamId, student) {
         await this._createStudent(student);
         let examId = Hasher.DecodeValue(encodedExamId);
-        const exam = await this.Db.ExecuteStoredPorcedure('GetExamStudent', {examId:examId});
+        const exam = await this.Db.ExecuteStoredPorcedure('GetExamStudent', { examId: examId });
         let examDto =
         {
             examId: exam.recordsets[0][0].Id,
@@ -34,7 +34,7 @@ class StudentsExamManager {
             StudentExamId: studentExamId,
             QuestionId: questionId,
             AnswerIds: this.Db.CnvertToIdTable(answerIds)
-        }       
+        }
         return await this.Db.ExecuteStoredPorcedure('SaveStudentAnswers', answersParms);
     }
 
@@ -45,34 +45,67 @@ class StudentsExamManager {
             StudentExamId: studentExamId,
             FullData: true
         }
-        let results = await this.Db.ExecuteStoredPorcedure('GetGrade',SubmitParms);
+        let results = await this.Db.ExecuteStoredPorcedure('GetGrade', SubmitParms);
         results = results.recordsets[0][0];
+        if (results.Error) {
+            return {
+                error: results.Error
+            };
+        }
         //genrate cert url
         let certUrl = null;
-        if(results.CertificateUrl)
-        {
+        if (results.CertificateUrl) {
             certUrl = global.gConfig.baseUrl + global.gConfig.CertGenerationUrl +
                 '/' + Hasher.EncodeValue(studentExamId);
-        }      
+        }
         //send mail
         if (results.OrganaizerEmail) {
             let body = Mailer.FormatEmailBody(results.Body, results.Name,
                 results.StudentFirstName, results.StudentLastName,
                 results.ExamDate, results.Grade, certUrl);
-                Mailer.SendEmail(results.OrganaizerEmail, results.StudentEmail,
+            Mailer.SendEmail(results.OrganaizerEmail, results.StudentEmail,
                 results.Subject, body);
         }
         //generate and return results dto
         let ResultsDto =
         {
             grade: results.Grade,
-            text: results.text,
+            text: results.Text,
             passed: results.Passed,
             showAnswers: results.ShowAnswer,
             passingGrade: results.PassingGrade,
             certificate: certUrl
         }
         return ResultsDto;
+    }
+
+    async GetAnswers(studentExamId) {
+        studentExamId = Hasher.DecodeValue(studentExamId);
+        let data ={studentExamId:studentExamId};
+        let res = await this.Db.ExecuteStoredPorcedure("ShowAnswersToStudent", data);
+        if (res.recordsets[0][0].Error)
+            return { error: res.recordsets[0][0].Error };
+        let questions = res.recordsets[0];
+        let answers = res.recordsets[1];
+        let i = 0, j = 0;
+        while (i < questions.length) {
+            questions[i].answers = [];
+            let wrong = 0;
+            while (j < answers.length && questions[i].Id === answers[j].QuestionId) {
+                questions[i].answers.push(answers[j]);
+                delete answers[j].QuestionId;
+                if ((answers[j].IsSelected && !answers[j].IsCorrect) ||
+                    (!answers[j].IsSelected && answers[j].IsCorrect))
+                    wrong++;
+                j++;
+            }
+            if (questions[i].answers.length > 0 && wrong == 0)
+                questions[i].IsCorrect = true;
+            else
+                questions[i].IsCorrect = false;
+            i++;
+        }
+        return questions;
     }
 
     async _createStudentExam(qestions, answers, examDto, student) {

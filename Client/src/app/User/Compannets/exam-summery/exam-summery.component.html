@@ -1,0 +1,20 @@
+<div class="conteiner" *ngIf="summery">
+  <h2>{{examName}} - Results</h2>
+  <hr />
+  <div>{{summery.text}}</div>
+  <hr />
+  <div>
+    Your grade: <span 
+    [ngClass]='{"redColor" : summery.passed!=1, "greenColor": summery.passed==1}'>{{summery.grade}}</span>
+  </div>
+  <div>
+    status:
+    <span class="redColor" *ngIf="summery.passed!=1">Failed</span>
+    <span class="greenColor" *ngIf="summery.passed==1">Passed</span>
+  </div>
+  <div>
+    passing grade: {{summery.passingGrade}}
+  </div>
+  <br/>
+  <button class="btn btn-info btn-block" *ngIf="summery.showAnswers" routerLink="/user/{{summery.id}}/answers">Show Answers</button>
+</div>

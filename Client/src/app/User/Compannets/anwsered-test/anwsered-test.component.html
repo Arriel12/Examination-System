@@ -1,0 +1,14 @@
+<div class="conteiner">
+  <app-anwsered-question [question]="questions[questionIndex]"></app-anwsered-question>
+  <div class="buttons-conteiner">
+    <button [disabled]="questionIndex<=0" (click)="previusQuestion()">prev</button>
+    <button [disabled]="questionIndex>=questions.length-1" (click)="nextQuestion()">next</button>   
+  </div>
+  <br />
+  <div class="AnswersNav">
+    <div *ngFor="let item of questions; let i = index;"
+      [ngClass]='{"correct" : item.IsCorrect, "incorrect":!item.IsCorrect}' (click)="selectQuestion(i);">
+      &nbsp;{{i+1}}&nbsp;
+    </div>
+  </div>
+</div>

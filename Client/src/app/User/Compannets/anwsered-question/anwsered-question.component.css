@@ -1,0 +1,30 @@
+div{
+    color: white;
+}
+
+.continer{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.horizontal{
+    display: flex;
+}
+
+.answer{
+    margin: 0 10px 0 10px;
+    padding: 0 10px 0 10px;
+}
+
+.CorrectAnswer{
+    color: green;
+}
+
+.WrongAnswer{
+    color: red;
+}
+
+.readOnly{
+    pointer-events: none; 
+}

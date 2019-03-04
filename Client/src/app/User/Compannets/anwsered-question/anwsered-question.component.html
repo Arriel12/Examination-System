@@ -1,0 +1,11 @@
+<div class="continer">
+  <div>{{question.Question}} - <span *ngIf="question.IsCorrect">Correct</span><span *ngIf="!question.IsCorrect">Incorrect</span></div>
+  <div class="answers">
+    <div class="answer" *ngFor="let item of question.answers;let i=index;"
+      [ngClass]='{"CorrectAnswer":item.IsCorrect, "WrongAnswer":!item.IsCorrect}'>
+      <mdb-checkbox [(ngModel)]="item.IsSelected" [ngModelOptions]="{standalone: true}" [inline]="true"
+        id="checkbox{{i}}" class="readOnly" >{{item.Answer}}
+      </mdb-checkbox>
+    </div>
+  </div>
+</div>

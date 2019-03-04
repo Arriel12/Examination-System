@@ -1,0 +1,27 @@
+<div style="color:white;">
+
+  <!-- registration form -->
+  <form class="text-center border border-light p-5" #f="ngForm">
+  
+      <p class="h4 mb-4">student registration</p>     
+  
+      <!-- First name -->
+      <input type="text" [(ngModel)]="firstName" name="firstName" id="firstName" class="form-control mb-4" placeholder="First Name">
+    
+      <!-- Last name -->
+      <input type="text" [(ngModel)]="lastName" name="lastName" id="lastName" class="form-control mb-4" placeholder="Last Name">
+
+      <!-- email -->
+      <input type="text" [(ngModel)]="email" name="email" id="email" class="form-control mb-4" placeholder="Email address">
+     
+       <!-- phone -->
+       <input type="text" [(ngModel)]="phone" name="phone" id="phone" class="form-control mb-4" placeholder="Phone number">
+    
+      <!-- Send button -->
+      <button class="btn btn-info btn-block" type="submit"
+      (click)="register(f.value)">Save</button>
+    </form>
+    <!-- End of registration form -->
+  
+  </div>
+  

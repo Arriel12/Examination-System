@@ -9,8 +9,8 @@ const newQuestion =
         isHorizontal: Joi.boolean().required(),
         tags: Joi.string().required(),
         answers: Joi.array().items(Joi.object().keys({
-            answer: Joi.string().required(),
-            isCorrect: Joi.boolean().required()
+            Answer: Joi.string().required(),
+            IsCorrect: Joi.boolean().required()
         })).min(2).required()
       }
 };
@@ -23,9 +23,9 @@ const updateQuestion ={
         isHorizontal: Joi.boolean().optional(),
         tags: Joi.string().optional(),
         answers: Joi.array().items(Joi.object().keys({
-            answer: Joi.string().required(),
-            isCorrect: Joi.boolean().required(),
-            id: Joi.number().integer().optional()
+            Answer: Joi.string().required(),
+            IsCorrect: Joi.boolean().required(),
+            Id: Joi.number().integer().optional()
         })).min(2).required()
     }
 }

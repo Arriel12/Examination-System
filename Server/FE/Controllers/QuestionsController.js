@@ -21,7 +21,7 @@ router.post('/:org/:category', validateOrganization, validate(Validators.newQues
         question.categories = [req.params.category];
         let results = await manager.CreateQuestion(question, orgId);
         if (results === SqlStatus.ArgumentsError)
-            res.status(400).send("invalid amount of correct questions");
+            res.status(400).send({err:"invalid amount of correct questions"});
         else
             res.status(200).send(results);
     }));

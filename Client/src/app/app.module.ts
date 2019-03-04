@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { from } from 'rxjs';
 import { TableModule, MDBBootstrapModule, IconsModule } from 'angular-bootstrap-md';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -13,7 +14,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ExamListComponent } from './Admin/Companents/exam-list/exam-list.component';
 import { CopyClipboardDirective } from './Admin/Directives/copy-clipboard.directive';
-import { from } from 'rxjs';
 import { ExamFormComponent } from './Admin/Companents/exam-form/exam-form.component';
 import { LoginComponent } from './Admin/Companents/login/login.component';
 import { RegisterComponent } from './Admin/Companents/register/register.component';
@@ -27,7 +27,13 @@ import { TokenInterceptor } from './Admin/Services/AuthInterceptor';
 import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
 import { EmailTitleAndBodyComponent } from './Admin/Companents/email-title-and-body/email-title-and-body.component';
 import { EmailTitleAndBodyService } from './Admin/Services/email-title-and-body.service';
-
+import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.component';
+import { ExamRegistrationComponent } from './User/Compannets/exam-registration/exam-registration.component';
+import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summery.component';
+import { UserTestComponent } from './User/Compannets/user-test/user-test.component';
+import { QuestionComponent as studentQuestionCompannet} from './Common/Components/question/question.component';
+import { AnwseredQuestionComponent } from './User/Compannets/anwsered-question/anwsered-question.component';
+import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-test.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,13 @@ import { EmailTitleAndBodyService } from './Admin/Services/email-title-and-body.
     UserLayoutComponent,
     QuestionListComponent,
     EmailTitleAndBodyComponent,
+    ExamIntroComponent,
+    ExamRegistrationComponent,
+    ExamSummeryComponent,
+    UserTestComponent,
+    studentQuestionCompannet,
+    AnwseredQuestionComponent,
+    AnwseredTestComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +73,6 @@ import { EmailTitleAndBodyService } from './Admin/Services/email-title-and-body.
     JwtModule
   ],
   providers: [
-    FormsModule,
     QuestionService,
     TitleHeaderService,
     EmailTitleAndBodyService,
