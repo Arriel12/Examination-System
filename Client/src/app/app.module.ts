@@ -34,6 +34,8 @@ import { UserTestComponent } from './User/Compannets/user-test/user-test.compone
 import { QuestionComponent as studentQuestionCompannet} from './Common/Components/question/question.component';
 import { AnwseredQuestionComponent } from './User/Compannets/anwsered-question/anwsered-question.component';
 import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-test.component';
+import { GenerateReportByTestComponent } from './Admin/Companents/generate-report-by-test/generate-report-by-test.component';
+import { ReportByRespondentNameComponent } from './Admin/Companents/report-by-respondent-name/report-by-respondent-name.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-
     UserTestComponent,
     studentQuestionCompannet,
     AnwseredQuestionComponent,
-    AnwseredTestComponent
+    AnwseredTestComponent,
+    GenerateReportByTestComponent,
+    ReportByRespondentNameComponent
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.comp
 import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summery.component';
 import { UserTestComponent } from './User/Compannets/user-test/user-test.component';
 import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-test.component';
+import { GenerateReportByTestComponent } from './Admin/Companents/generate-report-by-test/generate-report-by-test.component';
 
 const routes: Routes = [
     {
@@ -97,7 +98,12 @@ const routes: Routes = [
         path: 'questions/update/:id',
         canActivate: [AuthGuard, CateegoryGuard],
         component: QuestionComponent
-      }
+      },
+      {
+        path: 'Reports',
+        canActivate: [AuthGuard, CateegoryGuard],
+        component: GenerateReportByTestComponent
+      },
     ]
   }
 ];
