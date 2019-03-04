@@ -5,6 +5,7 @@ import { StudentExam } from '../Modules/StudentExam';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExamIntroComponent } from '../Compannets/exam-intro/exam-intro.component';
 import { ExamSummery } from '../Modules/ExamSummery';
+import { AnsweredQuestion } from 'src/app/Common/Models/AnsweredQuestion';
 
 @Injectable({
   providedIn: 'root'
@@ -37,9 +38,12 @@ export class StudentExamService {
   }
 
   SubmitExam(callbeck) {
-    let url = environment.apiEndpoint + `/exams/${this.Exam.id}/submit`;
+    let url = environment.apiEndpoint + `/exams/${this.getExam().id}/submit`;
     this.http.post<ExamSummery>(url, {}).subscribe(data => {
       this.examSummery = data;
+      this.examSummery.id = this.getExam().id;
+      this.Exam = null;
+      localStorage.removeItem("StudentExam");
       callbeck('');
     }, err => callbeck(err));
   }
@@ -48,5 +52,11 @@ export class StudentExamService {
     if (!this.Exam)
       this.Exam = JSON.parse(sessionStorage.getItem('StudentExam'));
     return this.Exam;
+  }
+
+  GetAnswers(){
+   this.examSummery.id;
+   let url = environment.apiEndpoint + `/exams/${this.examSummery.id}/Answers`;
+   return this.http.get<AnsweredQuestion[]>(url);
   }
 }

@@ -14,6 +14,7 @@ import { ExamRegistrationComponent } from './User/Compannets/exam-registration/e
 import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.component';
 import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summery.component';
 import { UserTestComponent } from './User/Compannets/user-test/user-test.component';
+import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-test.component';
 
 const routes: Routes = [
   //  {
@@ -45,6 +46,10 @@ const routes: Routes = [
   {
     path: 'user/:examId/summery',
     component: ExamSummeryComponent
+  },
+  {
+    path: 'user/:examId/answers',
+    component: AnwseredTestComponent
   },
   {
     path: 'user/:examId',

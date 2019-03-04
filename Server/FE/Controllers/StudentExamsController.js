@@ -42,4 +42,13 @@ router.post('/:studentExamId/submit', asyncWrapper(async function (req, res) {
         res.status(200).send(result);
 }));
 
+router.get('/:studentExamId/Answers',asyncWrapper(async function(req,res){
+    let studentExamId = req.params.studentExamId;
+    let result = await manager.GetAnswers(studentExamId);
+    if(result.error)
+        res.status(400).send(result);
+    else
+        res.status(200).send(result);
+}));
+
 module.exports = router;

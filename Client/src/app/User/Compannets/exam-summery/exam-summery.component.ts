@@ -23,5 +23,5 @@ export class ExamSummeryComponent implements OnInit {
 
   ngOnInit() {
   }
-
+ 
 }

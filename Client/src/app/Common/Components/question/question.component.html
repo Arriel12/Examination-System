@@ -1,7 +1,7 @@
 <div class="continer">
   <div>{{question.question}}</div>
   <div>{{question.textBelow}}</div>
-  <div class="answers">
+  <div class="answers" [ngClass]='{"horizontal":question.isHorizontal}'>
     <div class="answer" *ngFor="let item of question.answers;let i=index;">
       <!-- single choice -->
       <div *ngIf="!question.isMultipleChoice">
