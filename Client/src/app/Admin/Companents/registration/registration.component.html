@@ -1,0 +1,28 @@
+<div class="conteiner">
+    <div class="limitWidth" *ngIf="!registered">
+      <span *ngIf="err" style="color:red;">can't reset password: {{err}}</span>
+      <div class="md-form">
+          <input type="email" minlength="4" #darkFormEmail class="form-control white-text" required mdbInput
+            [(ngModel)]="email" placeholder="enter your email">
+          <label for="darkFormPassword" class="labelColor">email:</label>
+        </div>
+      <div class="md-form">
+        <input type="password" minlength="4" #darkFormPassword class="form-control white-text" required mdbInput
+          [(ngModel)]="password" placeholder="enter password">
+        <label for="darkFormPassword" class="labelColor">password:</label>
+      </div>
+      <div class="md-form">
+        <input type="password" minlength="4" #darkFormPasswordVerification class="form-control white-text" required
+          mdbInput [(ngModel)]="passwordVerification" placeholder="enter password agian">
+        <label for="darkFormPasswordVerification" class="labelColor">password verification</label>
+      </div>
+      <span *ngIf="password && passwordVerification && !(password===passwordVerification)" style="color: red;">passwords
+        don't match<br /></span>
+      <button (click)="register()"
+        [disabled]="!email || !password || !passwordVerification || !(password===passwordVerification)" type="button" mdbBtn
+        color="success" block="true" rounded="true" class="z-depth-1 waves-light" mdbWavesEffect>Register</button>
+    </div>
+    <div class="limitWidth white-text" *ngIf="registered">
+      activation email has been sent
+    </div>
+  </div> 

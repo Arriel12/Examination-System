@@ -2,7 +2,6 @@ class MssqlConnection {
     constructor() {
         this.sql = require('mssql')
         this.config = global.gConfig.SqlConfig;
-        console.log(this.config);
         this.pool = new this.sql.ConnectionPool(this.config).connect(err => {
             if (err)
                 console.log('Database Connection Failed! Bad Config: ', err)
