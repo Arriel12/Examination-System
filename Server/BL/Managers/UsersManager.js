@@ -99,7 +99,7 @@ class UsersManager {
         let res = await this.Db.ExecuteStoredPorcedure("GetUser", { email: username });
         if (res.recordsets[0].length == 0)
             return SqlStatus.ArgumentsError;
-        let restUrl = global.gConfig.baseUrl + global.gConfig.RestPasswordUrl +
+        let restUrl = global.gConfig.ClientUrl + global.gConfig.RestPasswordUrl +
             "/" + Hasher.EncodeValue(res.recordsets[0][0].UserId.toString()) + "/" +
             Hasher.EncodeValue(res.recordsets[0][0].Email);
         let sender = global.gConfig.Mailler.PasswordResetSender;

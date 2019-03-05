@@ -87,6 +87,11 @@ export class AdminDataService {
     return this.http.post(url, { username: email });
   }
 
+  resetPassword(userId,Email,newPassword){
+    let url = environment.adminApiEndpoint + `/resetpassword/${userId}/${Email}`;
+    return this.http.post(url,{password:newPassword});
+  }
+
   getCategories(callbeck) {
     if (this.categories == null ||
       this.categoriesOrganizationId != this.getOrganization().Id) {
