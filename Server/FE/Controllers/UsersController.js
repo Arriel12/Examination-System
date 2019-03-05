@@ -51,9 +51,9 @@ router.post("/resetpassword/:id/:email",validate(Validators.RestPassword)
     switch (await manager.RestUserPassword(encodedId,encodedEmail,password))
     {
         case SqlStatus.Secucces:
-            return res.status(200).send("password has been reseted seccsusfuly");
+            return res.status(200).send({status:"password has been reseted seccsusfuly"});
         case SqlStatus.ArgumentsError:
-            return res.status(400).send("invalid request");
+            return res.status(400).send({error:"invalid request"});
     }
 }));
 
@@ -63,9 +63,9 @@ asyncWrapper(async function (req, res) {
     switch (await manager.SendResetEmail(username))
     {
         case SqlStatus.Seccuss:
-            return res.status(200).send("mail sent");
+            return res.status(200).send({status:"mail sent"});
         case SqlStatus.ArgumentsError:
-            return res.status(400).send("invalid username");
+            return res.status(400).send({error:"invalid username"});
     }
 }));
 
