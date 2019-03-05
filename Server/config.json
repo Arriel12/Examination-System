@@ -1,8 +1,9 @@
 {
     "baseUrl": "http://localhost:8080",
+    "ClientUrl":"http://localhost:4200",
     "CertGenerationUrl" : "/certifcates",
     "EmailValidationUrl":"/validate",
-    "RestPasswordUrl":"/resetpassword",
+    "RestPasswordUrl":"/admin/resetPassword",
 	"SqlConfig" : {
         "user": "ExamSql",
         "password": "12345678",

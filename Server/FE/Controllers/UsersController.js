@@ -65,9 +65,9 @@ asyncWrapper(async function (req, res) {
     switch (await manager.SendResetEmail(username))
     {
         case ReturnStatus.Seccuss:
-            return res.status(200).send("mail sent");
+            return res.status(200).send({status:"mail sent"});
         case ReturnStatus.ArgumentsError:
-            return res.status(400).send("invalid username");
+            return res.status(400).send({error:"invalid username"});
     }
 }));
 
