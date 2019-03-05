@@ -16,6 +16,9 @@ import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summer
 import { UserTestComponent } from './User/Compannets/user-test/user-test.component';
 import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-test.component';
 import { RegistrationComponent } from './Admin/Companents/registration/registration.component';
+import { ForgotPasswordComponent } from './Admin/Companents/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './Admin/Companents/reset-password/reset-password.component';
+
 
 const routes: Routes = [
   //  {
@@ -61,8 +64,17 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+
     path: 'admin/register',
     component: RegistrationComponent
+
+    path: 'admin/forgotPassword',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'admin/resetPassword/:id/:email',
+    component: ResetPasswordComponent
+
   },
   {
     path: 'admin',
