@@ -4,6 +4,7 @@ const validate = require('express-validation');
 
 const authentication = require('../Middaleware/Autentication.js');
 const asyncWrapper = require("../Middaleware/AsyncWraper");
+const organizatinValidator = require("../Middaleware/OrganizationValidation");
 
 const Validators = require("../Validation/Reports.js");
 const ReportsManager = require("../../BL/Managers/ReportsManager.js");
@@ -38,9 +39,10 @@ router.post('/StudentAnswers', validate(Validators.StudentAnswers),
     }));
 
 
-router.get('/Student',
+router.get('/Student/:org',organizatinValidator,
     asyncWrapper(async function (req, res) {
-        let results = await manager.ListStudents(req.body);
+        let orgId =  req.params.org;
+        let results = await manager.ListStudents();
         res.status(200).send(results);
     }));
 
