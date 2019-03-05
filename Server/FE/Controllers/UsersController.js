@@ -38,9 +38,9 @@ router.post("/register",validate(Validators.Register),asyncWrapper(async functio
 {
     let status = await manager.Register(req.body);
     if(status == SqlStatus.Seccuss)
-        res.sendStatus(200);
+        res.status(200).send({status:'user created'});
     else if (status == SqlStatus.DuplicateError)
-        res.status(400).send("user already exsists");
+        res.status(400).send({error:"user already exsists"});
 }));
 
 router.post("/resetpassword/:id/:email",validate(Validators.RestPassword)
