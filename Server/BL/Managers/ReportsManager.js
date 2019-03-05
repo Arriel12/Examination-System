@@ -1,4 +1,4 @@
-const SqlStatus = require("../../Common/Enums/SqlStatus.js");
+const SqlStatus = require("../../Common/Enums/ReturnStatus");
 const ObjectHelper = require("../Helpers/ObjectHelpers");
 
 class ReportsManager {

@@ -25,10 +25,10 @@
 
 
 //send with auth cus of firewall (still blocked)
-function SendEmail(from, to, subject, body) {
+async function SendEmail(from, to, subject, body) {
     let nodemailer = require('nodemailer');
     let config = global.gConfig.Mailler;
-    let transport = nodemailer.createTransport( {
+    let transport = nodemailer.createTransport({
         service: config.Provider,
         auth: {
             user: config.User,
@@ -41,23 +41,23 @@ function SendEmail(from, to, subject, body) {
         subject: subject,
         html: body
     };
-    try
-    {
-    transport.sendMail(message, function (error,info) {
-        if (error) {
-            console.log('Error occured');
-            console.log(error.message);
-            return;
+    return new Promise(function (resolve, reject) {
+        try {
+            transport.sendMail(message, function (error, info) {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    transport.close();
+                    resolve(info);
+                }
+            });
         }
-        console.log("sent");
-        console.log(info);
-        transport.close();
+        catch (err) {
+            reject(error);
+        }
     });
-}
-catch(err)
-{
-    console.log(JSON.stringify(err));
-}
+
 }
 
 function FormatEmailBody(body, testName, firstName, lastName, date, grade, certificate) {

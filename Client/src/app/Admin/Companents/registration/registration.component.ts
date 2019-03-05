@@ -24,8 +24,7 @@ export class RegistrationComponent implements OnInit {
       this.registered = true;
 
     },err=>{
-      debugger;
-      this.err = err.error;  
+      this.err = err.error.error;  
     })
   }
 }

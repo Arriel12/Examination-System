@@ -7,7 +7,7 @@ const asyncWrapper = require("../Middaleware/AsyncWraper");
 const validateOrganization = require("../Middaleware/OrganizationValidation");
 
 const Validators = require("../Validation/Questions.js");
-const SqlStatus = require("../../Common/Enums/SqlStatus.js");
+const SqlStatus = require("../../Common/Enums/ReturnStatus.js");
 const QuestionsManager = require("../../BL/Managers/QuestionsManager.js");
 const manager = new QuestionsManager();
 

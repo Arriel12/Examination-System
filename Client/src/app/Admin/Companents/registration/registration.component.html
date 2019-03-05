@@ -1,6 +1,6 @@
 <div class="conteiner">
     <div class="limitWidth" *ngIf="!registered">
-      <span *ngIf="err" style="color:red;">can't reset password: {{err}}</span>
+      <span *ngIf="err" style="color:red;">can't register: {{err}}</span>
       <div class="md-form">
           <input type="email" minlength="4" #darkFormEmail class="form-control white-text" required mdbInput
             [(ngModel)]="email" placeholder="enter your email">
@@ -25,4 +25,5 @@
     <div class="limitWidth white-text" *ngIf="registered">
       activation email has been sent
     </div>
+    {{err|json}}
   </div> 

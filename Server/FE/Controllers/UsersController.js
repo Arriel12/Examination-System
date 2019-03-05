@@ -5,7 +5,7 @@ const validate = require('express-validation')
 const asyncWrapper = require("../Middaleware/AsyncWraper");
 
 const LoginStatues = require("../../Common/Enums/LoginStatus.js");
-const SqlStatus = require("../../Common/Enums/SqlStatus.js");
+const ReturnStatus = require("../../Common/Enums/ReturnStatus.js");
 const Validators = require("../Validation/UserValidation.js");
 const UsersManager = require("../../BL/Managers/UsersManager");
 const manager = new UsersManager();
@@ -27,9 +27,9 @@ router.get("/validate/:id/:email", asyncWrapper(async function (req, res) {
     let encodedEmail = req.params.email;
     switch (await manager.ValidateUser(encodedId,encodedEmail))
     {
-        case SqlStatus.Secucces:
+        case ReturnStatus.Secucces:
             return res.status(200).send("validated seccsusfuly");
-        case SqlStatus.ArgumentsError:
+        case ReturnStatus.ArgumentsError:
             return res.status(404).send("invalid url");
     }
 }));
@@ -37,10 +37,12 @@ router.get("/validate/:id/:email", asyncWrapper(async function (req, res) {
 router.post("/register",validate(Validators.Register),asyncWrapper(async function (req,res)
 {
     let status = await manager.Register(req.body);
-    if(status == SqlStatus.Seccuss)
+    if(status == ReturnStatus.Seccuss)
         res.status(200).send({status:'user created'});
-    else if (status == SqlStatus.DuplicateError)
+    else if (status == ReturnStatus.DuplicateError)
         res.status(400).send({error:"user already exsists"});
+    else if (status == ReturnStatus.EmailError)
+        res.status(500).send({error:"failed to send email"});
 }));
 
 router.post("/resetpassword/:id/:email",validate(Validators.RestPassword)
@@ -50,9 +52,9 @@ router.post("/resetpassword/:id/:email",validate(Validators.RestPassword)
     let password = req.body.password;
     switch (await manager.RestUserPassword(encodedId,encodedEmail,password))
     {
-        case SqlStatus.Secucces:
+        case ReturnStatus.Secucces:
             return res.status(200).send({status:"password has been reseted seccsusfuly"});
-        case SqlStatus.ArgumentsError:
+        case ReturnStatus.ArgumentsError:
             return res.status(400).send({error:"invalid request"});
     }
 }));
@@ -62,9 +64,9 @@ asyncWrapper(async function (req, res) {
     let username = req.body.username;
     switch (await manager.SendResetEmail(username))
     {
-        case SqlStatus.Seccuss:
+        case ReturnStatus.Seccuss:
             return res.status(200).send("mail sent");
-        case SqlStatus.ArgumentsError:
+        case ReturnStatus.ArgumentsError:
             return res.status(400).send("invalid username");
     }
 }));
