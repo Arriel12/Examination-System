@@ -39,6 +39,7 @@ import { ForgotPasswordComponent } from './Admin/Companents/forgot-password/forg
 import { ResetPasswordComponent } from './Admin/Companents/reset-password/reset-password.component';
 import { GenerateReportByTestComponent } from './Admin/Companents/generate-report-by-test/generate-report-by-test.component';
 import { ReportByRespondentNameComponent } from './Admin/Companents/report-by-respondent-name/report-by-respondent-name.component';
+import { QuestionSelectorComponent } from './Admin/Companents/question-selector/question-selector.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ReportByRespondentNameComponent } from './Admin/Companents/report-by-re
     ForgotPasswordComponent,
     ResetPasswordComponent,
     GenerateReportByTestComponent,
-    ReportByRespondentNameComponent
+    ReportByRespondentNameComponent,
+    QuestionSelectorComponent
   ],
   imports: [
     BrowserModule,

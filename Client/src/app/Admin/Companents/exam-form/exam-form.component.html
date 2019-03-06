@@ -84,7 +84,7 @@
     <hr style="background-color:gray;">
 
     <!-- Field of study -->
-    <p class="text-left" [(ngModel)]="stam" ngModel name="currentStatus"> Current Status:
+    <p class="text-left"> Current Status:
       <ng-container *ngIf="validateEmail(emailFrom.value) ; else elseTemplate">
         <b style="color:green"> ON </b>
       </ng-container>
@@ -108,7 +108,9 @@
     <hr>
     <email-title-and-body [email]="failureEmail"></email-title-and-body>
 
-
+    <br/>
+    <app-question-selector [selectedIds]="selectedIds"></app-question-selector>
+    <br/>
     <!-- Send button -->
     <button class="btn btn-info btn-block" type="submit" (click)="AddExam(f.value, f2.value)"
       [disabled]="!f.valid || !f2.valid">Save</button>
@@ -117,6 +119,5 @@
     <p>{{failureEmail| json}} </p>
   </form>
   <!-- End of Test form -->
-
 
 </div>

@@ -1,14 +1,22 @@
-<form #email="ngForm">
+<form>
 
   <!-- Message Subject  -->
-  <input type="text" ngModel name="email.Subject" #email.Subject="ngModel" 
-  id="email.Subject" class="form-control mb-4" placeholder="Message Subject" required>
+  <input type="text" [(ngModel)]="email.messageSubject" [ngModelOptions]="{standalone: true}" id="email.Subject"
+    class="form-control mb-4" placeholder="Message Subject" required>
 
-   <!-- Message Body -->
-   <div class="form-group">
-      <p class="text-left" for="email.Body">Message Body:</p>
-      <textarea class="form-control rounded-6" id="email.Body" ngModel name="email.Body"
-        #email.Body="ngModel" rows="3" placeholder="Message Body" required></textarea>
-    </div>
-    <p>{{email.value | json}}</p>
+  <!-- Message Body -->
+  <div class="form-group">
+    <p class="text-left" for="email.Body">Message Body:</p>
+    <textarea class="form-control rounded-6" id="email.Body" [(ngModel)]="email.messageBody"
+      [ngModelOptions]="{standalone: true}" rows="3" placeholder="Message Body" required></textarea>
+  </div>
+  <div>
+    <p>predefiened templates click to copy to clipboard</p>
+    <span [copy-clipboard]="'@TestName@'">@TestName@</span>&nbsp;
+    <span [copy-clipboard]="'@FirstName@'">@FirstName@</span>&nbsp;
+    <span [copy-clipboard]="'@LastName@'">@LastName@</span>&nbsp;
+    <span [copy-clipboard]="'@Date@'">@Date@</span>&nbsp;
+    <span [copy-clipboard]="'@Grade@'">@Grade@</span>&nbsp;
+    <span [copy-clipboard]="'@Certificate@'">@Certificate@</span>&nbsp;
+  </div>
 </form>
