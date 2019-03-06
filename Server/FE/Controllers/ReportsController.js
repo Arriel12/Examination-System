@@ -42,7 +42,7 @@ router.post('/StudentAnswers', validate(Validators.StudentAnswers),
 router.get('/Student/:org',organizatinValidator,
     asyncWrapper(async function (req, res) {
         let orgId =  req.params.org;
-        let results = await manager.ListStudents();
+        let results = await manager.ListStudents(orgId);
         res.status(200).send(results);
     }));
 
