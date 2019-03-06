@@ -118,6 +118,5 @@ export class QuestionComponent implements OnInit {
   {
     alert(error);
   }
-
   
 }

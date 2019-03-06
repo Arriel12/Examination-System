@@ -65,10 +65,11 @@ class ReportsManager {
         return res.recordsets[0];
     }
 
-    async ListStudents() {
-        let res = await this.Db.ExecuteStoredPorcedure("ListStudents", {});
+    async ListStudents(oranizationId) {
+        let res = await this.Db.ExecuteStoredPorcedure("GetStudents", {organizationId: oranizationId});
         return res.recordsets[0];
     }
+
 }
 
 module.exports = ReportsManager;

@@ -18,9 +18,13 @@ import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-
 import { RegistrationComponent } from './Admin/Companents/registration/registration.component';
 import { ForgotPasswordComponent } from './Admin/Companents/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './Admin/Companents/reset-password/reset-password.component';
-
+import { GenerateReportByTestComponent } from './Admin/Companents/generate-report-by-test/generate-report-by-test.component';
 
 const routes: Routes = [
+    {
+      path: '',
+      component: ExamFormComponent
+    },
   //  {
   //    path: '',
   //    component: AppComponent
@@ -67,7 +71,8 @@ const routes: Routes = [
 
     path: 'admin/register',
     component: RegistrationComponent
-
+  },
+  {
     path: 'admin/forgotPassword',
     component: ForgotPasswordComponent
   },
@@ -110,7 +115,12 @@ const routes: Routes = [
         path: 'questions/update/:id',
         canActivate: [AuthGuard, CateegoryGuard],
         component: QuestionComponent
-      }
+      },
+      {
+        path: 'Reports',
+        canActivate: [AuthGuard, CateegoryGuard],
+        component: GenerateReportByTestComponent
+      },
     ]
   }
 ];

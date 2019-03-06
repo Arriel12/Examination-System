@@ -25,6 +25,8 @@ import { TitleHeaderComponent } from './title-header/title-header.component';
 import { UserLayoutComponent } from './User/user-layout/user-layout.component';
 import { TokenInterceptor } from './Admin/Services/AuthInterceptor';
 import { QuestionListComponent } from './Admin/Companents/question-list/question-list.component';
+import { EmailTitleAndBodyComponent } from './Admin/Companents/email-title-and-body/email-title-and-body.component';
+import { EmailTitleAndBodyService } from './Admin/Services/email-title-and-body.service';
 import { ExamIntroComponent } from './User/Compannets/exam-intro/exam-intro.component';
 import { ExamRegistrationComponent } from './User/Compannets/exam-registration/exam-registration.component';
 import { ExamSummeryComponent } from './User/Compannets/exam-summery/exam-summery.component';
@@ -35,7 +37,8 @@ import { AnwseredTestComponent } from './User/Compannets/anwsered-test/anwsered-
 import { RegistrationComponent } from './Admin/Companents/registration/registration.component';
 import { ForgotPasswordComponent } from './Admin/Companents/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './Admin/Companents/reset-password/reset-password.component';
-
+import { GenerateReportByTestComponent } from './Admin/Companents/generate-report-by-test/generate-report-by-test.component';
+import { ReportByRespondentNameComponent } from './Admin/Companents/report-by-respondent-name/report-by-respondent-name.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,7 @@ import { ResetPasswordComponent } from './Admin/Companents/reset-password/reset-
     TitleHeaderComponent,
     UserLayoutComponent,
     QuestionListComponent,
+    EmailTitleAndBodyComponent,
     ExamIntroComponent,
     ExamRegistrationComponent,
     ExamSummeryComponent,
@@ -61,6 +65,8 @@ import { ResetPasswordComponent } from './Admin/Companents/reset-password/reset-
     RegistrationComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    GenerateReportByTestComponent,
+    ReportByRespondentNameComponent
   ],
   imports: [
     BrowserModule,
@@ -79,6 +85,7 @@ import { ResetPasswordComponent } from './Admin/Companents/reset-password/reset-
   providers: [
     QuestionService,
     TitleHeaderService,
+    EmailTitleAndBodyService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

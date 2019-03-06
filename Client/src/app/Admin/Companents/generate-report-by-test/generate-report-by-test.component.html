@@ -1,0 +1,49 @@
+<div id="main">
+  <h2 class="animated bounce infinite" style="color:violet;">
+
+    <mdb-icon fas icon="file-export" style="color:white;"></mdb-icon>
+    Generates Reports
+    <mdb-icon fas icon="chart-line" style="color:white;"></mdb-icon>
+    For Tests And Students!!
+  </h2>
+  <form>
+    <h3>
+      Test Report For - <strong> {{studyField[0].name}} </strong>
+    </h3>
+
+    <!-- Select Test -->
+    <p class="text-left"> Select Test: </p>
+    <select class="browser-default custom-select" ngModel name="selectTest" id="selectTest" required>
+      <option selected disabled value="">Please Select a Test</option>
+      <option *ngFor="let item of selectTest" [value]="item.name"> {{item.name}} </option>
+    </select>
+    <br><br>
+
+    <!--  Date Range -->
+    Date Range: &nbsp;&nbsp;
+    From: <input type="date" ngModel name="dateRangeFrom" id="dateRangeFrom" required>
+    &nbsp;&nbsp;
+    To: <input type="date" ngModel name="dateRangeTo" id="dateRangeTo" required>
+    <br>
+    or
+    <br>
+
+    <!-- inline Checkbok to Any date in the past-->
+    <p class="form-group text-left">
+      <mdb-checkbox [inline]="true" [default]="true" ngModel name="anyDate">
+        Any date in the past...
+      </mdb-checkbox>
+    </p>
+
+    <button mdbBtn type="button" color="warning" mdbWavesEffect>
+        <mdb-icon fas icon="angle-double-left"></mdb-icon> &nbsp; Back </button>
+   
+    <button mdbBtn type="button" color="success" mdbWavesEffect
+    style="float:right">Generate Reports</button>
+  </form>
+
+  <hr style="background-color: white;">
+  
+<app-report-by-respondent-name></app-report-by-respondent-name>
+
+</div>

@@ -1,0 +1,14 @@
+<form #email="ngForm">
+
+  <!-- Message Subject  -->
+  <input type="text" ngModel name="email.Subject" #email.Subject="ngModel" 
+  id="email.Subject" class="form-control mb-4" placeholder="Message Subject" required>
+
+   <!-- Message Body -->
+   <div class="form-group">
+      <p class="text-left" for="email.Body">Message Body:</p>
+      <textarea class="form-control rounded-6" id="email.Body" ngModel name="email.Body"
+        #email.Body="ngModel" rows="3" placeholder="Message Body" required></textarea>
+    </div>
+    <p>{{email.value | json}}</p>
+</form>
