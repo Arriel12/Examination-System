@@ -8,12 +8,20 @@ import { MdbTableService } from 'angular-bootstrap-md';
 })
 export class ReportByRespondentNameComponent implements OnInit {
 
- 
+
   elements: any = [];
-  headElements = ['ID', 'First', 'Last', 'Handle'];
+  headElements = ['ID', 'Respondent', 'Email', 'Last Activity', 'Show'];
+
+  Id: any;
+  respondentName: string;
+  email: string;
+  lastActivity: Date;
+  showActivity: boolean = false;
 
   searchText: string = '';
   previous: string;
+
+
 
   constructor(private tableService: MdbTableService) { }
 
@@ -22,8 +30,8 @@ export class ReportByRespondentNameComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (let i = 1; i <= 10; i++) {
-      this.elements.push({ id: i.toString(), first: 'Wpis ' + i, last: 'Last ' + i, handle: 'Handle ' + i });
+    for (let i = 1; i <= 7; i++) {
+      this.elements.push({ Id: i.toString(), respondent: 'Respondent ' + i, email: 'Last ' + i, lastActivity: 'Last Activity' + i, show: 'show Report ' + i });
     }
 
     this.tableService.setDataSource(this.elements);
@@ -44,6 +52,17 @@ export class ReportByRespondentNameComponent implements OnInit {
       this.tableService.setDataSource(prev);
     }
 
+  }
+
+  showActivityExams(respondent) {
+    this.Id = respondent.Id;
+    this.respondentName = respondent.respondent;
+    this.email = respondent.email;
+    this.lastActivity = respondent.lastActivity;
+    
+    this.searchText = '';
+    this.showActivity = true;
+    
   }
 
 }
