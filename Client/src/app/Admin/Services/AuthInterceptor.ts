@@ -3,19 +3,20 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpResponse
 } from '@angular/common/http';
 import { AdminDataService } from './admin-data.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+const adminUrl = environment.adminApiEndpoint;
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor(public admin: AdminDataService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let adminUrl = environment.adminApiEndpoint;
     if (request.url.startsWith(adminUrl)) {
       request = request.clone({
         setHeaders: {

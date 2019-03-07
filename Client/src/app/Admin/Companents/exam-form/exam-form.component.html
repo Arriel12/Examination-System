@@ -123,11 +123,6 @@
     <!-- Send button -->
     <button class="btn btn-info btn-block" type="submit" (click)="Save(f.value, f2.value);"
       [disabled]="!f.valid || !numberFormEx.validity.valid">Save</button>
-    <p>{{f.value | json}} </p>
-    <p>{{f2.value | json}} </p>
-    <p>{{failureEmail| json}} </p>
-    <p>{{f.valid}}</p>
-    <p>{{numberFormEx.validity | json}}</p>
   </form>
   <!-- End of Test form -->
 

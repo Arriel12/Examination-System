@@ -69,7 +69,7 @@ import { ActivityReportsByRespondentComponent } from './Admin/Companents/activit
     ResetPasswordComponent,
     GenerateReportByTestComponent,
     ReportByRespondentNameComponent,
-    QuestionSelectorComponent
+    QuestionSelectorComponent,
     ActivityReportsByRespondentComponent
   ],
   imports: [

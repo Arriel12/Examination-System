@@ -20,6 +20,8 @@
             [routerLink]="[ 'exams']" [disabled]="isEmptyCategory" >Manage Tests</button>
             <button mdbBtn type="button" color="amber" class="waves-light fullwidth" mdbWavesEffect
             [routerLink]="[ 'Reports']" [disabled]="isEmptyCategory" >Reports</button>
+            <button mdbBtn type="button" color="amber" class="waves-light fullwidth" mdbWavesEffect
+            (click)="logout()">Logout</button>
         </div>
     </div>
      <div class="col-md-9">
