@@ -1,0 +1,58 @@
+.categoyHeader
+{
+    color: orange;
+}
+
+.header
+{
+    font-weight: bolder;
+    text-align: center;
+}
+
+.header h2
+{
+    font-weight: bolder;
+    color: blue
+}
+
+.serchDiv
+{
+    display: flex;
+    color: white;
+}
+
+.ExamButtonDiv
+{
+    display: flex;
+}
+
+td
+{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.activeText{
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px;
+    margin: 0.375rem;
+}
+
+.buttonTd
+{
+    padding: 0;
+    justify-content: center;
+}
+
+.buttonTd button
+{
+    padding: 5px;
+}
+
+.resultRow{
+    color: white;
+}
+.selectedQuestion{
+    background-color: darkgreen !important;
+}

@@ -3,7 +3,8 @@
   <!-- Question form -->
   <form class="text-center border border-light p-5" #f="ngForm">
 
-    <p class="h2 mb-2"> New Test </p>
+    <p class="h2 mb-2" *ngIf="exam"> Update Test </p>
+    <p class="h2 mb-2" *ngIf="!exam"> New Test </p>
     <p class="h4 mb-4">General Test Details </p>
 
     <!-- Field of study -->
@@ -12,9 +13,10 @@
 
     <!-- Test Language -->
     <p class="text-left"> Language: </p>
-    <select class="browser-default custom-select" ngModel name="languages" id="languages" required>
-      <option selected disabled value="">Please choose language</option>
-      <option *ngFor="let item of languages" [value]="item.name"> {{item.name}} </option>
+    <select class="browser-default custom-select" ngModel name="languages" #languagesSelect
+    [value]="exam ? exam.Language : ''" ng-required="!exam || languagesSelect.dirty">
+      <option ng-selected="!exam && false" disabled value="">Please choose language</option>
+      <option *ngFor="let item of languages" [value]="item.name.toLowerCase()"> {{item.name}} </option>
     </select>
     <br><br>
 
@@ -22,18 +24,21 @@
     <!-- Test Name -->
 
     <input type="text" ngModel name="testName" #testName="ngModel" id="testName" class="form-control mb-4"
-      placeholder="Test Name" required>
+      placeholder="Test Name" ng-required="!exam || testName.dirty" [value]="exam ? exam.Name : ''">
 
     <!-- Error or Success Messages -->
     <div class="form-group">
       <div [formGroup]="validationForm" #f2="ngForm">
         <div class="md-form">
           <input mdbInput mdbValidate formControlName="numberFormEx" min="0" max="100" type="number" ngModel
-            name="numberFormEx" class="form-control" id="numberFormEx">
+            name="numberFormEx" class="form-control" #numberFormEx [value]="exam ? exam.PassingGrade : 0"
+            ng-required="!exam || numberFormEx.dirty" >
           <label for="numberFormEx">Type your Passing Grade</label>
-          <mdb-error *ngIf="numberFormEx.invalid && (numberFormEx.dirty || numberFormEx.touched)">Grade invalid
+          <mdb-error *ngIf="(numberFormEx.invalid && (numberFormEx.dirty || numberFormEx.touched)) &&
+          !(exam && !numberFormEx.dirty)">Grade invalid
           </mdb-error>
-          <mdb-success *ngIf="numberFormEx.valid && (numberFormEx.dirty || numberFormEx.touched)">Grade valid
+          <mdb-success *ngIf="(numberFormEx.valid && (numberFormEx.dirty || numberFormEx.touched)) ||
+           (exam && !numberFormEx.dirty)">Grade valid
           </mdb-success>
         </div>
       </div>
@@ -43,7 +48,8 @@
     <div class="form-group text-left">
       <!-- <textarea class="form-control rounded-6" id="textBelowQuestionText"
               ngModel name="textBelowQuestionText" #textBelowQuestionText="ngModel" rows="3" placeholder="Text below question"></textarea> -->
-      <mdb-checkbox [inline]="true" [default]="true" ngModel name="showCorrect">Show correct answers after submission
+      <mdb-checkbox [inline]="true" [default]="true" ngModel name="showCorrect" [checked]="exam && exam.ShowAnswer">Show
+        correct answers after submission
       </mdb-checkbox>
     </div>
 
@@ -54,26 +60,29 @@
     <div class="form-group">
       <label for="Header">Test Header</label>
       <textarea class="form-control rounded-6" id="Header" ngModel name="Header" #Header="ngModel" rows="3"
-        placeholder="Header Test"></textarea>
+        placeholder="Header Test" [value]="exam ? exam.OpeningText : ''" ng-required="!exam || Header.dirty"></textarea>
     </div>
 
     <!-- Massage To Show on Success -->
     <div class="form-group">
       <label for="massageToSuccess">Massage To Show on Success</label>
       <textarea class="form-control rounded-6" id="massageToSuccess" ngModel name="massageToSuccess"
-        #massageToSuccess="ngModel" rows="3" placeholder="Massage To Show on Success" required></textarea>
+        #massageToSuccess="ngModel" rows="3" placeholder="Massage To Show on Success" 
+        [value]="exam ? exam.SuccessText : ''" ng-required="!exam || massageToSuccess.dirty"></textarea>
     </div>
 
     <!-- Massage To Show on Failure -->
     <div class="form-group">
       <label for="massageToFailure">Massage To Show on Failure</label>
       <textarea class="form-control rounded-6" id="massageToFailure" ngModel name="massageToFailure"
-        #massageToFailure="ngModel" rows="3" placeholder="Massage To Show on Failure" required></textarea>
+        #massageToFailure="ngModel" rows="3" placeholder="Massage To Show on Failure" 
+        [value]="exam ? exam.FailText : ''" ng-required="!exam || massageToFailure.dirty"></textarea>
     </div>
 
     <!-- Certificate -->
     <p class="text-left"> Certificate Template: </p>
-    <select class="browser-default custom-select" ngModel name="certificates" id="certificates" required>
+    <select class="browser-default custom-select" ngModel name="certificates" id="certificates"
+    [value]="exam? exam.CertificateUrl :''">
       <option selected disabled value="">Please choose Certificate template</option>
       <option *ngFor="let item of certificates" [value]="item.name"> {{item.name}} </option>
     </select>
@@ -84,8 +93,8 @@
     <hr style="background-color:gray;">
 
     <!-- Field of study -->
-    <p class="text-left" [(ngModel)]="stam" ngModel name="currentStatus"> Current Status:
-      <ng-container *ngIf="validateEmail(emailFrom.value) ; else elseTemplate">
+    <p class="text-left"> Current Status:
+      <ng-container *ngIf="validateEmail(emailFrom.value) ||(exam && !emailFrom.dirty) ; else elseTemplate">
         <b style="color:green"> ON </b>
       </ng-container>
       <ng-template #elseTemplate>
@@ -97,26 +106,29 @@
 
     <!-- Email From  -->
     <input type="text" ngModel name="emailFrom" #emailFrom="ngModel" id="emailFrom" class="form-control mb-4"
-      placeholder="Email From" required [value]="">
+      placeholder="Email From" [value]="exam ? exam.OrganaizerEmail : ''">
 
     <h4 style="color:green;"> Passing the Grade </h4>
     <hr>
 
-    <email-title-and-body [email]="passingEmail"></email-title-and-body>
+    <email-title-and-body [email]="passingEmail" [required]="emailFrom.value && emailFrom.valid"></email-title-and-body>
 
     <h4 style="color:red"> Failing the Grade </h4>
     <hr>
     <email-title-and-body [email]="failureEmail"></email-title-and-body>
 
-
+    <br />
+    <app-question-selector [selectedIds]="selectedIds"></app-question-selector>
+    <br />
     <!-- Send button -->
-    <button class="btn btn-info btn-block" type="submit" (click)="AddExam(f.value, f2.value)"
-      [disabled]="!f.valid || !f2.valid">Save</button>
+    <button class="btn btn-info btn-block" type="submit" (click)="Save(f.value, f2.value);"
+      [disabled]="!f.valid || !numberFormEx.validity.valid">Save</button>
     <p>{{f.value | json}} </p>
     <p>{{f2.value | json}} </p>
     <p>{{failureEmail| json}} </p>
+    <p>{{f.valid}}</p>
+    <p>{{numberFormEx.validity | json}}</p>
   </form>
   <!-- End of Test form -->
-
 
 </div>
