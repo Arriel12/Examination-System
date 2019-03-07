@@ -40,6 +40,7 @@ import { ResetPasswordComponent } from './Admin/Companents/reset-password/reset-
 import { GenerateReportByTestComponent } from './Admin/Companents/generate-report-by-test/generate-report-by-test.component';
 import { ReportByRespondentNameComponent } from './Admin/Companents/report-by-respondent-name/report-by-respondent-name.component';
 import { QuestionSelectorComponent } from './Admin/Companents/question-selector/question-selector.component';
+import { ActivityReportsByRespondentComponent } from './Admin/Companents/activity-reports-by-respondent/activity-reports-by-respondent.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { QuestionSelectorComponent } from './Admin/Companents/question-selector/
     GenerateReportByTestComponent,
     ReportByRespondentNameComponent,
     QuestionSelectorComponent
+    ActivityReportsByRespondentComponent
   ],
   imports: [
     BrowserModule,
