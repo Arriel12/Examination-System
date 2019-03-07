@@ -18,7 +18,7 @@ router.get('/:org/:category', _validateOrganization,
     asyncWrapper(async function (req, res) {
         let orgId = req.params.org;
         let catId = req.params.category;
-        let results = await manager.ListExams(orgId,catId);
+        let results = await manager.ListExams(orgId, catId);
         res.status(200).send(results);
     }));
 
@@ -26,7 +26,7 @@ router.post('/:org/:category/Create', _validateOrganization, validate(Validators
     asyncWrapper(async function (req, res) {
         let orgId = req.params.org;
         let catId = req.params.category;
-        let results = await manager.CreateExam(orgId,catId, req.body);
+        let results = await manager.CreateExam(orgId, catId, req.body);
         res.status(200).send(results);
     }));
 
@@ -40,17 +40,26 @@ router.get('/:org/:category/:examId', _validateOrganization,
 router.post('/:org/:category/:examId', _validateOrganization, validate(Validators.UpdateExam),
     asyncWrapper(async function (req, res) {
         let examId = req.params.examId;
-        let data = req.body;
-        await manager.UpdateExam(examId, data)
-        res.sendStatus(200);
+        try {
+            examId= parseInt(examId);
+            if (examId) {
+                let data = req.body;
+                await manager.UpdateExam(examId, data)
+                res.status(200).send({});
+            }
+            else
+            res.status(400).send({error:'invalid request'});
+        } catch (error) {
+            res.status(400).send({error:'invalid request'});
+        }
     }));
 
-    router.delete('/:org/:category/:examId', _validateOrganization,
+router.delete('/:org/:category/:examId', _validateOrganization,
     asyncWrapper(async function (req, res) {
         let examId = req.params.examId;
         let org = req.params.org;
         let category = req.params.category;
-        await manager.DeleteExam(examId,org,category);
+        await manager.DeleteExam(examId, org, category);
         res.sendStatus(200);
     }));
 

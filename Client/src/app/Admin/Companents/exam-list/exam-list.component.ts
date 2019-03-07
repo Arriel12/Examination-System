@@ -106,7 +106,7 @@ export class ExamListComponent implements OnInit, AfterViewInit {
   }
 
   update(test: ExamListEntery, index) {
-
+    this.router.navigate([`/admin/exams/update/${test.Id}`]);
   }
 
   create() {

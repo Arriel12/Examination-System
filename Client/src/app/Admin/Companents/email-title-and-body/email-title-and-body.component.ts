@@ -9,7 +9,7 @@ import { Email } from '../../Models/Email';
 export class EmailTitleAndBodyComponent implements OnInit {
 
   @Input() email: Email;
-
+  @Input() required: boolean;
   constructor() { }
 
   ngOnInit() {

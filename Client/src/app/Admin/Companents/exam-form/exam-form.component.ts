@@ -5,7 +5,8 @@ import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms'
 import { Email } from '../../Models/Email';
 import { ExamsDataService } from '../../Services/exams-data.service';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Exam } from '../../Models/Exam';
 
 @Component({
   selector: 'app-exam-form',
@@ -28,13 +29,33 @@ export class ExamFormComponent implements OnInit {
 
   selectedIds: number[];
 
-  stam: string;
-
+  examId: any;
+  exam: Exam;
 
   constructor(private admin: AdminDataService, public fb: FormBuilder,
-    private exams: ExamsDataService, private router: Router) {
+    private exams: ExamsDataService, private router: Router,
+    private curRoute: ActivatedRoute) {
     this.selectedIds = [];
-    this.category = admin.getCategory();
+    this.examId = this.curRoute.snapshot.paramMap.get('id');
+    if (this.examId) {
+      this.examId = parseInt(this.examId);
+      this.exams.GetExam(this.examId).subscribe(ex => {
+        ex.questions.forEach(q => {
+          this.selectedIds.push(parseInt(q.Id));
+        });
+        this.passingEmail.messageBody = ex.SuccessMailBody;
+        this.passingEmail.messageSubject = ex.SuccessMailSubject;
+        this.failureEmail.messageBody = ex.FailMailBody;
+        this.failureEmail.messageSubject = ex.FailMailSubject;
+        this.exam = ex;
+      }, err => {
+        //error
+        alert('cant load exam to update:' + err.error);
+      })
+    }
+    else {
+      this.category = admin.getCategory();
+    }
     this.validationForm = fb.group({
       numberFormEx: [null, [Validators.required, Validators.min(0),
       Validators.max(100)]]
@@ -68,8 +89,15 @@ export class ExamFormComponent implements OnInit {
     return regexEmail.test(emailFrom);
   }
 
-  AddExam(f, f2) {
+  Save(f, f2) {
     debugger;
+    if (this.examId)
+      this.UpdateExam(f, f2);
+    else
+      this.AddExam(f, f2);
+  }
+
+  private AddExam(f, f2) {
     f.language = f.languages.toLowerCase();
     delete f.languages;
     f.name = f.testName;
@@ -102,8 +130,51 @@ export class ExamFormComponent implements OnInit {
       //fail
       if (err.status == 400)
         alert("cant create new exam: invalid request data");
-      else 
+      else
         alert("cant create new exam: " + err.error);
     });
   }
+
+  private UpdateExam(f, f2) {
+    if (f.languages)
+      f.language = f.languages.toLowerCase();
+    delete f.languages;
+    if (f.testName)
+      f.name = f.testName;
+    delete f.testName;
+    if (f.Header)
+      f.openningText = f.Header;
+    delete f.Header;
+    if (f2.numberFormEx)
+      f.passingGrade = f2.numberFormEx;
+    if (f.showCorrect)
+      f.showAnswer = f.showCorrect ? true : false;
+    delete f.showCorrect;
+    if (f.certificates)
+      f.certificateUrl = f.certificates;
+    delete f.certificates;
+    if (f.massageToSuccess)
+      f.successText = f.massageToSuccess;
+    delete f.massageToSuccess;
+    if (f.massageToFailure)
+      f.failText = f.massageToFailure;
+    delete f.massageToFailure;
+    if (f.emailFrom) {
+      f.orgenaizerEmail = f.emailFrom;
+      f.successMailSubject = this.passingEmail.messageSubject;
+      f.successMailBody = this.passingEmail.messageBody;
+      f.failMailSubject = this.failureEmail.messageSubject;
+      f.failMailBody = this.failureEmail.messageBody;
+    }
+    delete f.emailFrom;
+    f.questionsIds = this.selectedIds
+    this.exams.UpdateExam(this.examId,f).subscribe(()=>{
+      //seccuss
+      this.router.navigate(['/admin/exams']);
+    }, err=>{
+      //failed
+      alert('update failed: '+err.error);
+    });
+  }
+
 }

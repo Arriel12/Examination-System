@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AdminDataService } from './admin-data.service';
 import { ExamListEntery } from '../Models/examListEntery';
+import { Exam } from '../Models/Exam';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class ExamsDataService {
     let url = environment.adminApiEndpoint + '/exams/' + this.admin.getOrganization().Id +
      '/' + this.admin.getCategory().Id + '/' + examId;
     let options = this.GetOptions();
-    return this.http.get(url, options);
+    return this.http.get<Exam>(url, options);
   }
 
   UpdateExam(examId: number, data: object) {

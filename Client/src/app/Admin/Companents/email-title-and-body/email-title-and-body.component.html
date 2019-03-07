@@ -2,13 +2,13 @@
 
   <!-- Message Subject  -->
   <input type="text" [(ngModel)]="email.messageSubject" [ngModelOptions]="{standalone: true}" id="email.Subject"
-    class="form-control mb-4" placeholder="Message Subject" required>
+    class="form-control mb-4" placeholder="Message Subject" ng-required="required">
 
   <!-- Message Body -->
   <div class="form-group">
     <p class="text-left" for="email.Body">Message Body:</p>
     <textarea class="form-control rounded-6" id="email.Body" [(ngModel)]="email.messageBody"
-      [ngModelOptions]="{standalone: true}" rows="3" placeholder="Message Body" required></textarea>
+      [ngModelOptions]="{standalone: true}" rows="3" placeholder="Message Body" ng-required="required"></textarea>
   </div>
   <div>
     <p>predefiened templates click to copy to clipboard</p>
