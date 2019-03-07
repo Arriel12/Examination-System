@@ -1,0 +1,12 @@
+#main{
+    color:white;
+}
+
+.modal-content{
+    color: black;
+}
+
+.modal-body>p>span{
+
+    font-weight: 900;
+}

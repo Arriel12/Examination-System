@@ -1,44 +1,57 @@
 <div id="main">
-<h3>
+  <h3>
     Report By Respondent Name
   </h3>
-<br><br>
+  <br><br>
 
-<h5>Find a Respondent </h5>
-<p>
-  To find a respondent, start typing a name below.
-  the select the respondent from the list tath will apear.<br>
-  TIP: To show all respondents press the spacebar
-</p>
-<br>
+  <h5>Find a Respondent </h5>
+  <p>
+    To find a respondent, start typing a name below.
+    the select the respondent from the list tath will apear.<br>
+    TIP: To show all respondents press the spacebar
+  </p>
+  <br>
 
 
-<!-- Search and Table -->
+  <!-- Search and Table -->
   <div class="row">
-      <div class="col-md-12 mx-auto">
-        <div class="md-form">
-          <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput>
-          <label for="search">Search</label>
-        </div>
+    <div class="col-md-12 mx-auto">
+      <div class="md-form">
+        <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput>
+        <label for="search">Search</label>
       </div>
     </div>
-    <table mdbTable class="z-depth-1">
-      <thead>
-        <tr>
-          <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let el of elements; let i = index">
-          <th scope="row">{{el.id}}</th>
-          <td class="red-text">{{el.first}}</td>
-          <td>{{el.last}}</td>
-          <td>{{el.handle}}</td>
-        </tr>
-      </tbody>
-    </table>
-  
+  </div>
+  <table mdbTable class="z-depth-1" *ngIf="searchText != ''">
+    <thead>
+      <tr>
+        <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let el of elements; let i = index">
+        <th scope="row">{{el.Id}}</th>
+        <td class="yellow-text">{{el.respondent}}</td>
+        <td>{{el.email}}</td>
+        <td>{{el.lastActivity}}</td>
+        <td> <button type="button" mdbBtn color="info" mdbWavesEffect
+           (click)="showActivityExams(el)">
+            {{el.show}}</button> </td>
+      </tr>
+    </tbody>
+  </table>
+
 
 
 </div>
+
+
+<activity-reports-by-respondent
+ [Id]="Id"
+ [respondentName]="respondentName"
+ [email]="email"
+ [lastActivity]="lastActivity"
+ *ngIf="showActivity"
+ >
+</activity-reports-by-respondent>
