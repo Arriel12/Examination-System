@@ -1,4 +1,7 @@
 import { Component, OnInit, Input} from '@angular/core';
+import { Student } from '../../Models/Student';
+import { ReportsService } from '../../Services/reports.service';
+import { StudentReportEntery } from '../../Models/StudentRepotEntery';
 
 @Component({
   selector: 'activity-reports-by-respondent',
@@ -7,25 +10,18 @@ import { Component, OnInit, Input} from '@angular/core';
 })
 export class ActivityReportsByRespondentComponent implements OnInit {
 
-  @Input() Id: any;
-  @Input() respondentName: string;
-  @Input() email: string;
-  @Input() lastActivity: any;
+  @Input() student: Student;
   averageGrade: number;
   selectedTestName: string;
-  modalElement:any = {instanse: '', id: '', testName: '', grade:'',  handedOn: ""};
+  modalElement:StudentReportEntery = new StudentReportEntery();
 
-  elements: any = [
-    {instanse: 1, id: '100', testName: 'HTML', grade: 92,  handedOn: "01/10/18"},
-    {instanse: 2, id: '101', testName: 'JS', grade: 88,  handedOn: "01/11/18"},
-    {instanse: 3, id: '102', testName: 'CSS', grade: 75,  handedOn: "01/12/18"},
-  ];
+  elements: StudentReportEntery[] = [];
 
   headElements = ['Instance', 'Test Id', 'Test Name', 'Grade', 'Handed On'];
 
-  showResultForThisTest(el){
+  showResultForThisTest(el: StudentReportEntery){
     this.modalElement =el;
-    this.selectedTestName = el.testName;
+    this.selectedTestName = el.Name;
     return this.selectedTestName;
   }
 
@@ -33,15 +29,20 @@ export class ActivityReportsByRespondentComponent implements OnInit {
     let sumOfGrade = 0;
 
     for (let index = 0; index < this.elements.length; index++) {
-      sumOfGrade += this.elements[index].grade;
+      sumOfGrade += this.elements[index].Grade;
     }
     this.averageGrade = sumOfGrade / this.elements.length;
     return this.averageGrade;
   }
 
-  constructor() { }
+  constructor(private reportService: ReportsService) {
+   }
 
   ngOnInit() {
+    debugger;
+    this.reportService.GetStudentReport(this.student.Email).subscribe(enteries=>{
+      this.elements = enteries;
+    });
   }
 
 }
