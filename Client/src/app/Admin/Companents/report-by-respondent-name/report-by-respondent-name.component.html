@@ -31,13 +31,13 @@
     </thead>
     <tbody>
       <tr *ngFor="let el of elements; let i = index">
-        <th scope="row">{{el.Id}}</th>
-        <td class="yellow-text">{{el.respondent}}</td>
-        <td>{{el.email}}</td>
-        <td>{{el.lastActivity}}</td>
+        <th scope="row">{{i}}</th>
+        <td class="yellow-text">{{el.FirstName}} {{el.LastName}}</td>
+        <td>{{el.Email}}</td>
+        <td>{{el.lastActivity | date}}</td>
         <td> <button type="button" mdbBtn color="info" mdbWavesEffect
            (click)="showActivityExams(el)">
-            {{el.show}}</button> </td>
+           show Report</button> </td>
       </tr>
     </tbody>
   </table>
@@ -48,10 +48,7 @@
 
 
 <activity-reports-by-respondent
- [Id]="Id"
- [respondentName]="respondentName"
- [email]="email"
- [lastActivity]="lastActivity"
+ [student]="selectedStudent"
  *ngIf="showActivity"
  >
 </activity-reports-by-respondent>

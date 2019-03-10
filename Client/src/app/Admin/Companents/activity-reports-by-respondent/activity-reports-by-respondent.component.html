@@ -1,7 +1,7 @@
 <div id="main">
 
   <h3>
-    Activity Reports For: <span style="color:greenyellow;"> {{respondentName}} </span>
+    Activity Reports For: <span style="color:greenyellow;"> {{student.FirstName}} {{student.LastName}}</span>
   </h3>
   <p>Click a test to show it's result
   <span style="float:right;"> Average Grades: 
@@ -16,11 +16,11 @@
     <tbody>
       <tr mdbTableCol *ngFor="let el of elements; let i = index;"
          (click)="showResultForThisTest(el) && basicModal.show()">
-        <th scope="row">{{el.instanse}}</th>
-        <th scope="row">{{el.id}}</th>
-        <td>{{el.testName}}</td>
-        <td>{{el.grade}}</td>
-        <td>{{el.handedOn}}</td>
+        <th scope="row">{{el.Id}}</th>
+        <th scope="row">{{el.ExamId}}</th>
+        <td>{{el.Name}}</td>
+        <td>{{el.Grade}}</td>
+        <td>{{el.HandedOn}}</td>
       </tr>
     </tbody>
   </table>
@@ -33,17 +33,17 @@
         <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
           <span aria-hidden="true">×</span>
         </button>
-        <h3> Test Result for <span style="color:orangered;">{{modalElement.testName}}</span></h3>
+        <h3> Test Result for <span style="color:orangered;">{{modalElement.Name}}</span></h3>
         
         <!-- <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4> -->
       </div><br>
-      <h4> Respondent Name: <span style="color:orangered;"> {{respondentName}}</span></h4>
+      <h4> Respondent Name: <span style="color:orangered;"> {{student.FirstName}} {{student.LastName}}</span></h4>
       <div class="modal-body">
-        <p><span>Instanse: </span> {{modalElement.instanse}}</p>
-        <p><span>Id: </span> {{modalElement.id}}</p>
-        <p><span>Test Name: </span> {{modalElement.testName}}</p>
-        <p><span>Grade: </span> {{modalElement.grade}}</p>
-        <p><span>Handed On: </span> {{modalElement.handedOn}}</p>
+        <p><span>Instanse: </span> {{modalElement.Id}}</p>
+        <p><span>Id: </span> {{modalElement.ExamId}}</p>
+        <p><span>Test Name: </span> {{modalElement.Name}}</p>
+        <p><span>Grade: </span> {{modalElement.Grade}}</p>
+        <p><span>Handed On: </span> {{modalElement.HandedOn}}</p>
 
       </div>
       <div class="modal-footer">

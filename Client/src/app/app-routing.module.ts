@@ -23,7 +23,8 @@ import { GenerateReportByTestComponent } from './Admin/Companents/generate-repor
 const routes: Routes = [
     {
       path: '',
-      component: ExamFormComponent
+      redirectTo: '/admin',
+      pathMatch: 'full'
     },
   //  {
   //    path: '',
